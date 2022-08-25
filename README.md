@@ -4,8 +4,8 @@
 ## Technologies used
 
 - [Express](https://expressjs.com/) - Http(s) Server
-- [protobuf-ts](https://github.com/timostamm/protobuf-ts) - Used for serializing/deserializing data sent from the Client to the Server and vice versa.
-- [kcp-ts]](https://github.com/boba-ps/kcp-ts) - A Fast and Reliable ARQ Protocol
+- [protobufjs](https://www.npmjs.com/package/protobufjs) - Used for serializing/deserializing data sent from the Client to the Server and vice versa.
+- [node-kcp](https://github.com/memetrollsXD/node-kcp) - A Fast and Reliable ARQ Protocol
 
 ## Usage
 
@@ -13,7 +13,6 @@
 
 ```powershell
 git clone https://github.com/tamilpp25/MoonlightTS.git
-git checkout boba-fork
 ```
 
 2.Extract and open the repository in the Terminal
