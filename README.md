@@ -23,7 +23,13 @@ git checkout boba-fork
 cd MoonlightTS
 ```
 
-3.Run the following
+3.Put Resources in the following folder: 
+ 
+```js
+src/data/resource/
+```
+
+4.Run the following
 
 ```powershell
 npm install
