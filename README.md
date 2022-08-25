@@ -5,7 +5,7 @@
 
 - [Express](https://expressjs.com/) - Http(s) Server
 - [protobuf-ts](https://github.com/timostamm/protobuf-ts) - Used for serializing/deserializing data sent from the Client to the Server and vice versa.
-- [kcp-ts]](https://github.com/boba-ps/kcp-ts) - A Fast and Reliable ARQ Protocol
+- [kcp-ts](https://github.com/boba-ps/kcp-ts) - A Fast and Reliable ARQ Protocol
 
 ## Usage
 
