@@ -270,7 +270,7 @@ export class KcpConnection {
         header = Buffer.from(
           PacketHead.toBinary(
             PacketHead.create({
-              timestamp: BigInt(this.clock.now() >>> 0),
+              recvTimeMs: BigInt(this.clock.now() >>> 0),
               ...message._header,
             })
           )

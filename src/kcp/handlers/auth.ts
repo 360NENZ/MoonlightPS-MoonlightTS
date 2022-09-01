@@ -44,8 +44,8 @@ export class AuthHandler extends KcpHandler {
     res,
     connection,
   }: PacketContext<GetPlayerTokenReq>) {
-    //Seed exchange for >= 2.7.50 thanks to Hutao-GS:
-
+ //Seed exchange for >= 2.7.50 thanks to Hutao-GS: (Support's Nitro's UA patch too)
+   
     const seed = 0x0n; //Generate a random seed
 
     const encrypted_client_seed = Buffer.from(req.clientSeed, 'base64'); //Get encrypted seed from client

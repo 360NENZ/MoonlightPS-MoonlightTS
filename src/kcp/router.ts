@@ -160,7 +160,7 @@ export class PacketRouterResponse<T extends object> {
         header = Buffer.from(
           PacketHead.toBinary(
             PacketHead.create({
-              timestamp: BigInt(this.context.exec.clock.now() >>> 0),
+              recvTimeMs: BigInt(this.context.exec.clock.now() >>> 0),
               ...message._header,
             })
           )

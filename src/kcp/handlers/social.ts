@@ -4,12 +4,13 @@ import {
   GetPlayerFriendListRsp,
   GetPlayerSocialDetailReq,
   GetPlayerSocialDetailRsp,
-} from "../../data/proto/game";
+  GetPlayerBlacklistReq,
+  GetPlayerFriendListReq,
+} from '../../data/proto/game';
 
-import { GetPlayerBlacklistReq,GetPlayerFriendListReq } from "../../data/proto/additional";
 
-import { KcpHandler, KcpServer } from "..";
-import type { PacketContext } from "../router";
+import { KcpHandler, KcpServer } from '..';
+import type { PacketContext } from '../router';
 export class SocialHandler extends KcpHandler {
   protected setup(server: KcpServer) {
     server.router
@@ -19,23 +20,23 @@ export class SocialHandler extends KcpHandler {
   }
 
   getPlayerSocialDetail({ res }: PacketContext<GetPlayerSocialDetailReq>) {
-      res.send(GetPlayerSocialDetailRsp, {
-        detailData: {
-          uid: 69420,
-          nickname: "WindyTS",
-          level: 60,
-          onlineState: FriendOnlineState.ONLINE,
-          isFriend: true,
-          isMpModeAvailable: true,
-          nameCardId: 210064,
-          finishAchievementNum: 1000,
-          signature: "WindyTS on TOP!",
-          profilePicture: {
-            avatarId: 10000026,
-          },
+    res.send(GetPlayerSocialDetailRsp, {
+      detailData: {
+        uid: 69420,
+        nickname: 'WindyTS',
+        level: 60,
+        onlineState: FriendOnlineState.ONLINE,
+        isFriend: true,
+        isMpModeAvailable: true,
+        nameCardId: 210064,
+        finishAchievementNum: 1000,
+        signature: 'WindyTS on TOP!',
+        profilePicture: {
+          avatarId: 10000026,
         },
-      });
-    }
+      },
+    });
+  }
 
   getPlayerFriendList({ res }: PacketContext<GetPlayerFriendListReq>) {
     res.send(GetPlayerFriendListRsp, {});

@@ -34,7 +34,7 @@ export class Session {
         header = Buffer.from(
           PacketHead.toBinary(
             PacketHead.create({
-              timestamp: BigInt(Math.floor(Date.now() / 1000)),
+              recvTimeMs: BigInt(Math.floor(Date.now() / 1000)),
               ...message._header,
             })
           )
