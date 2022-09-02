@@ -19,7 +19,7 @@ export class ExcelManager {
 
   private static initMaterialExcel() {
     const _materials: [{ id: number; stackLimit: number; itemType: string }] =
-      JSON.parse(r('../../data/resource/ExcelBinOutput/MaterialExcelConfigData.json'));
+      JSON.parse(r('../../data/resources/ExcelBinOutput/MaterialExcelConfigData.json'));
     _materials.forEach((element) => {
       if (element.itemType === 'ITEM_MATERIAL') {
         this.materials.push(new Material(element.id, element.stackLimit));

@@ -110,7 +110,7 @@ dist
 # MoonlightTS
 config.json
 src/data/proto/*.proto
-src/data/resource
+src/data/resources
 
 
 log.txt
