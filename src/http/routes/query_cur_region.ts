@@ -9,8 +9,8 @@ const c = new Logger('Dispatch', 'blue');
 const ec2b = new Ec2bKey();
 
 export default function handle(req: Request, res: Response) {
-  const dataObj = QueryCurrRegionHttpRsp.create({
-    regionInfo: RegionInfo.create({
+  const dataObj = QueryCurrRegionHttpRsp.fromPartial({
+    regionInfo: RegionInfo.fromPartial({
       gateserverIp: Config.GAMESERVER.SERVER_IP,
       gateserverPort: Config.GAMESERVER.SERVER_PORT,
       secretKey: ec2b.ec2b,
@@ -34,23 +34,20 @@ export default function handle(req: Request, res: Response) {
   });
 
   if (Config.GAMESERVER.MAINTENANCE) {
-    const maintenance = QueryCurrRegionHttpRsp.create({
+    const maintenance = QueryCurrRegionHttpRsp.fromPartial({
       retcode: 11,
       msg: "MoonlightTS",
-      regionInfo: RegionInfo.create(),
-      detail: {
-        oneofKind: 'stopServer',
-        stopServer: StopServerInfo.create({
-          stopBeginTime: Math.floor(Date.now()/1000) ,
-          stopEndTime: Math.floor(Date.now()/1000)*2,
-          url: "https://tamilpp25.ml/", //TODO real auth
-          contentMsg: Config.GAMESERVER.MAINTENANCE_MSG
-        })
-      }
+      regionInfo: RegionInfo.fromPartial({}),
+      stopServer: StopServerInfo.fromPartial({
+        stopBeginTime: Math.floor(Date.now()/1000) ,
+        stopEndTime: Math.floor(Date.now()/1000)*2,
+        url: "https://tamilpp25.ml/", //TODO real auth
+        contentMsg: Config.GAMESERVER.MAINTENANCE_MSG
+      })
   });
-    res.send(encryptAndSign(QueryCurrRegionHttpRsp.toBinary(maintenance)))
+    res.send(encryptAndSign(QueryCurrRegionHttpRsp.encode(maintenance).finish()))
     return;
   }
 
-  res.send(encryptAndSign(QueryCurrRegionHttpRsp.toBinary(dataObj)));
+  res.send(encryptAndSign(QueryCurrRegionHttpRsp.encode(dataObj).finish()));
 }

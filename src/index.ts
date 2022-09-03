@@ -9,18 +9,20 @@ import Interface from "./commands/Interface";
 import { SystemExecutor } from "./system";
 import { KcpServer } from "./kcp";
 
-import { PingHandler } from "./kcp/handlers/ping";
-import { AuthHandler } from "./kcp/handlers/auth";
-import { SceneHandler } from "./kcp/handlers/scene";
-import { SocialHandler } from "./kcp/handlers/social";
-import { ShopHandler } from "./kcp/handlers/shop";
-import { PlayerSetPause } from "./kcp/handlers/HandlePackets";
+// import { PingHandler } from "./kcp/handlers/ping";
+// import { AuthHandler } from "./kcp/handlers/auth";
+// import { SceneHandler } from "./kcp/handlers/scene";
+// import { SocialHandler } from "./kcp/handlers/social";
+// import { ShopHandler } from "./kcp/handlers/shop";
+// import { PlayerSetPause } from "./kcp/handlers/HandlePackets";
 import { ExcelManager } from "./game/managers/ExcelManager";
+import ProtoFactory from "./utils/ProtoFactory";
 
 const c = new Logger("MoonlightTS");
 c.log('Starting MoonlightTS...')
 
 HttpServer.getInstance().start();
+ProtoFactory.init();
 Interface.start();
 
 ExcelManager.init()
@@ -28,11 +30,11 @@ ExcelManager.init()
 new SystemExecutor()
 .register(
     new KcpServer()
-      .register(new PingHandler())
-      .register(new AuthHandler())
-      .register(new SceneHandler())
-      .register(new SocialHandler())
-      .register(new ShopHandler())
-      .register(new PlayerSetPause())
+      // .register(new PingHandler())
+      // .register(new AuthHandler())
+      // .register(new SceneHandler())
+      // .register(new SocialHandler())
+      // .register(new ShopHandler())
+      // .register(new PlayerSetPause())
   )
   .start(100);

@@ -25,12 +25,12 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
-    "@protobuf-ts/plugin": "^2.8.0",
     "colorts": "^0.1.63",
     "dgram": "^1.0.1",
     "express": "^4.18.1",
     "kcp-ts": "github:boba-ps/kcp-ts",
     "mongodb": "^4.9.0",
+    "protobufjs": "^7.1.0",
     "typescript": "^4.7.4"
   }
 }

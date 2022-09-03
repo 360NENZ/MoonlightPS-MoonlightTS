@@ -6,7 +6,7 @@ import { Ec2bKey } from "../../crypto";
 const ec2b = new Ec2bKey()
 
 export default function handle(req: Request, res: Response) {
-    const dataObj = QueryRegionListHttpRsp.create({
+    const dataObj = QueryRegionListHttpRsp.fromPartial({
         regionList: [],
         clientSecretKey: ec2b.ec2b,
         clientCustomConfigEncrypted: ec2b.cipher(
@@ -26,7 +26,7 @@ export default function handle(req: Request, res: Response) {
     });
 
     Config.DISPATCH.forEach(item => {
-        dataObj.regionList.push(RegionSimpleInfo.create({
+        dataObj.regionList.push(RegionSimpleInfo.fromPartial({
             title: item.DISPATCH_NAME,
             name: "os_asia",
             dispatchUrl: item.DISPATCH_URL,
@@ -34,5 +34,5 @@ export default function handle(req: Request, res: Response) {
         }));
     });
 
-    res.send(Buffer.from(QueryRegionListHttpRsp.toBinary(dataObj)).toString("base64"));
+    res.send(Buffer.from(QueryRegionListHttpRsp.encode(dataObj).finish()).toString("base64"));
 }

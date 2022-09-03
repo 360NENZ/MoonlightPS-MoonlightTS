@@ -1,5 +1,4 @@
 import { getConv, getToken, Kcp } from 'kcp-ts';
-import type { MessageType, PartialMessage } from '@protobuf-ts/runtime';
 import { cloneBuffer, Ec2bKey, xorBuffer } from '../crypto';
 import { MT19937_64 } from '../crypto/mt64';
 import {
@@ -11,16 +10,19 @@ import {
 import { UdpPacket, UdpServer } from './udp';
 import type { Clock } from '../utils/clock';
 import { Executor, ServiceBase } from '../system';
-import { DataPacket } from './packet';
-import { PacketRouter } from './router';
+import { CmdID, DataPacket } from './packet';
 import { Session } from './session';
 import Config from '../utils/Config';
 import { PacketHead } from '../data/proto/game';
 import Interface from '../commands/Interface';
 import Logger, { VerboseLevel } from '../utils/Logger';
+import ProtoFactory, { MessageType } from '../utils/ProtoFactory';
+import defaultHandler from './packets/recv/PacketHandler';
 
 const c = new Logger('KCP', 'red');
 const loopPackets: string[] = ['PingReq', 'PingRsp'];
+
+type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
 
 const ec2b = new Ec2bKey();
 
@@ -29,7 +31,7 @@ export abstract class KcpHandler extends ServiceBase<KcpServer> {}
 export class KcpServer extends ServiceBase<Executor> {
   readonly udp;
   readonly connections;
-  readonly router;
+  // readonly router;
 
   // optimization
   readonly sharedBuffer;
@@ -40,7 +42,7 @@ export class KcpServer extends ServiceBase<Executor> {
 
     this.udp = new UdpServer({ type: 'udp4' });
     this.connections = new KcpConnectionManager(this);
-    this.router = new PacketRouter();
+    // this.router = new PacketRouter();
 
     this.sharedBuffer = Buffer.alloc(0x20000);
     this.sharedMt = new MT19937_64();
@@ -128,7 +130,25 @@ export class KcpServer extends ServiceBase<Executor> {
       }
 
       for (const packet of connection) {
-        this.router.handle(exec, connection, packet);
+
+        const packetName = CmdID[packet.id]
+        const data = packet.data
+
+        if (Config.VERBOSE_LEVEL >= VerboseLevel.WARNS && !loopPackets.includes(packetName)) {
+          c.log(`Recv : ${packetName} (${packet.id})`);
+        }
+
+        import(`./packets/recv/${packetName}`).then(async mod => {
+          await mod.default(connection.getSession(), packet);
+      }).catch(e => {
+          if (e.code === 'MODULE_NOT_FOUND') c.warn(`Unhandled packet: ${packetName}`);
+          else c.error(e);
+
+          defaultHandler(connection.getSession(), packet);
+      });
+
+
+        // this.router.handle(exec, connection, packet);
       }
     } else if (Config.VERBOSE_LEVEL >= VerboseLevel.VERBL) {
       c.warn('ignored kcp packet from unknown connection');
@@ -247,65 +267,65 @@ export class KcpConnection {
     return this.session;
   }
 
-  sendPacket<T extends object>(
-    type: MessageType<T>,
-    message: PartialMessage<T> & { _header?: PartialMessage<PacketHead> }
-  ) {
-    const name = type.typeName;
+  // sendPacket<T extends object>(
+  //   type: MessageType<T>,
+  //   message: PartialMessage<T> & { _header?: PartialMessage<PacketHead> }
+  // ) {
+  //   const name = type.typeName;
 
-    if (!PacketRouter.idMap.hasName(name)) {
-      c.warn(`ignoring sending packet ${name} with unmapped id`);
-      return false;
-    }
+  //   if (!PacketRouter.idMap.hasName(name)) {
+  //     c.warn(`ignoring sending packet ${name} with unmapped id`);
+  //     return false;
+  //   }
 
-    const id = PacketRouter.idMap.id(name);
+  //   const id = PacketRouter.idMap.id(name);
 
-    // partial to full message
-    message = type.create(message);
+  //   // partial to full message
+  //   message = type.create(message);
 
-    let header, body;
+  //   let header, body;
 
-    if (message._header) {
-      try {
-        header = Buffer.from(
-          PacketHead.toBinary(
-            PacketHead.create({
-              recvTimeMs: BigInt(this.clock.now() >>> 0),
-              ...message._header,
-            })
-          )
-        );
-      } catch (err) {
-        if (Config.VERBOSE_LEVEL >= VerboseLevel.ALL) {
-          c.warn(`failed to encode packet header for ${name} (${id})`);
-        }
+  //   if (message._header) {
+  //     try {
+  //       header = Buffer.from(
+  //         PacketHead.encode(
+  //           PacketHead.fromPartial({
+  //             recvTimeMs: BigInt(this.clock.now() >>> 0),
+  //             ...message._header,
+  //           })
+  //         ).finish()
+  //       );
+  //     } catch (err) {
+  //       if (Config.VERBOSE_LEVEL >= VerboseLevel.ALL) {
+  //         c.warn(`failed to encode packet header for ${name} (${id})`);
+  //       }
 
-        return false;
-      }
-    } else {
-      header = Buffer.alloc(0);
-    }
+  //       return false;
+  //     }
+  //   } else {
+  //     header = Buffer.alloc(0);
+  //   }
 
-    try {
-      body = Buffer.from(type.toBinary(message as T));
-    } catch (err) {
-      if (Config.VERBOSE_LEVEL >= VerboseLevel.ALL) {
-        c.warn(`failed to encode packet ${name} (${id})`);
-      }
-      return false;
-    }
+  //   try {
+  //     body = Buffer.from(type.toBinary(message as T));
+  //   } catch (err) {
+  //     if (Config.VERBOSE_LEVEL >= VerboseLevel.ALL) {
+  //       c.warn(`failed to encode packet ${name} (${id})`);
+  //     }
+  //     return false;
+  //   }
 
-    if (
-      Config.VERBOSE_LEVEL >= VerboseLevel.WARNS &&
-      !loopPackets.includes(name)
-    ) {
-      c.log(`Sent : ${name} (${id})`);
-    }
-    this.send(new DataPacket(id, header, body));
-    this.flush();
+  //   if (
+  //     Config.VERBOSE_LEVEL >= VerboseLevel.WARNS &&
+  //     !loopPackets.includes(name)
+  //   ) {
+  //     c.log(`Sent : ${name} (${id})`);
+  //   }
+  //   this.send(new DataPacket(id, header, body));
+  //   this.flush();
 
-    return true;
-  }
+  //   return true;
+  // }
 
   get connected() {
     return !this.kcp.isDeadLink();
@@ -317,6 +337,31 @@ export class KcpConnection {
     this.encryptor.cipher(encrypted);
     this.kcp.send(encrypted);
   }
+
+  // async sendPacket<Class extends MessageType<any>>(
+  //   type: Class,
+  //   data: UnWrapMessageType<Class>
+  // ) {
+  //   const typeName = ProtoFactory.getName(type);
+  //   const encodedBuffer = type.encode(type.fromPartial(data)).finish();
+  //   const packet = new DataPacket(
+  //     CmdID[typeName],
+  //     Buffer.alloc(0),//no one cares about packethead
+  //     Buffer.from(encodedBuffer)
+  //   );
+  //   c.verbL(data);
+  //   c.verbH(encodedBuffer);
+  //   if (!encodedBuffer) c.error('encodedBuffer is undefined');
+  //   if (
+  //     Config.VERBOSE_LEVEL >= VerboseLevel.WARNS &&
+  //     !loopPackets.includes(typeName)
+  //   ) {
+  //     c.log(`Sent : ${typeName} (${CmdID[typeName]})`);
+  //   }
+  //   //todo: might want to regen the ts-proto types with env = node
+  //   this.send(packet);
+  //   this.flush();
+  // }
 
   /** Sends the given buffer directly on the underlying UDP "connection". */
   sendRaw(buffer: Buffer) {

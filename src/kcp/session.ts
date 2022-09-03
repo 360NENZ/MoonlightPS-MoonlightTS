@@ -1,71 +1,47 @@
 import { KcpConnection } from '.';
-import { PacketHead } from '../data/proto/game';
 import Config from '../utils/Config';
 import Logger, { VerboseLevel } from '../utils/Logger';
-import { DataPacket } from './packet';
-import { PacketRouter } from './router';
-import { MessageType,PartialMessage } from '@protobuf-ts/runtime'
-import packetIds from './packetIds.json';
+import { CmdID, DataPacket } from './packet';
+import ProtoFactory, { MessageType } from '../utils/ProtoFactory';
+import { PacketHead } from '../data/proto/game';
 const c = new Logger('Session', 'yellow');
+
+type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
+const loopPackets: string[] = ['PingReq', 'PingRsp'];
 
 export class Session {
   connection: KcpConnection;
+  c: Logger
 
   constructor(connection: KcpConnection) {
     this.connection = connection;
+    this.c = c;
   }
 
-  sendPacket<T extends object>(type: MessageType<T>, message: PartialMessage<T> & { _header?: PartialMessage<PacketHead> }) {
-    const name = type.typeName;
-
-    if (!PacketRouter.idMap.hasName(name)) {
-      c.warn(`ignoring sending packet ${name} with unmapped id`);
-      return false;
+  async send<Class extends MessageType<any>>(
+    type: Class,
+    data: UnWrapMessageType<Class>
+  ) {
+    const typeName = ProtoFactory.getName(type);
+    const encodedBuffer = type.encode(type.fromPartial(data)).finish();
+    const header = PacketHead.fromPartial({})
+    const packet = new DataPacket(
+      CmdID[typeName],
+      Buffer.from(PacketHead.encode(header).finish()),//no one cares about packethead
+      Buffer.from(encodedBuffer)
+    );
+    c.verbL(data);
+    c.verbH(encodedBuffer);
+    if (!encodedBuffer) c.error('encodedBuffer is undefined');
+    if (
+      Config.VERBOSE_LEVEL >= VerboseLevel.WARNS &&
+      !loopPackets.includes(typeName)
+    ) {
+      c.log(`Sent : ${typeName} (${CmdID[typeName]})`);
     }
-
-    const id = PacketRouter.idMap.id(name);
-
-    message = type.create(message);
-
-    let header, body;
-
-    if (message._header) {
-      try {
-        header = Buffer.from(
-          PacketHead.toBinary(
-            PacketHead.create({
-              recvTimeMs: BigInt(Math.floor(Date.now() / 1000)),
-              ...message._header,
-            })
-          )
-        );
-      } catch (err) {
-        if (Config.VERBOSE_LEVEL >= VerboseLevel.ALL) {
-          c.warn(`Failed to encode header for ${name}`);
-        }
-        return false;
-      }
-    } else {
-      header = Buffer.alloc(0);
-    }
-
-    try {
-      body = Buffer.from(type.toBinary(message as T));
-    } catch (err) {
-        if (Config.VERBOSE_LEVEL >= VerboseLevel.ALL) {
-            c.warn(`Failed to encode packet for ${name}`);
-          }
-      return false;
-    }
-
-    if (Config.VERBOSE_LEVEL >= VerboseLevel.WARNS) {
-        c.log(`Sent ${name} (${id})`);
-    }
-
-    this.connection.send(new DataPacket(id, header, body));
+    //todo: might want to regen the ts-proto types with env = node
+    this.connection.send(packet);
     this.connection.flush();
-
-    return true;
   }
 
 
