@@ -24,6 +24,8 @@ const loopPackets: string[] = ['PingReq', 'PingRsp'];
 
 type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
 
+let clientSequence = 10;
+
 const ec2b = new Ec2bKey();
 
 export abstract class KcpHandler extends ServiceBase<KcpServer> {}
@@ -36,9 +38,12 @@ export class KcpServer extends ServiceBase<Executor> {
   // optimization
   readonly sharedBuffer;
   readonly sharedMt;
+  public clientSequence;
 
   constructor() {
     super();
+
+    this.clientSequence = clientSequence;
 
     this.udp = new UdpServer({ type: 'udp4' });
     this.connections = new KcpConnectionManager(this);

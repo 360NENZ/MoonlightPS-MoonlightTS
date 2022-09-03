@@ -24,7 +24,10 @@ export class Session {
   ) {
     const typeName = ProtoFactory.getName(type);
     const encodedBuffer = type.encode(type.fromPartial(data)).finish();
-    const header = PacketHead.fromPartial({})
+    const header = PacketHead.fromPartial({
+      recvTimeMs: Math.floor(Date.now()/1000),
+      clientSequenceId: ++this.connection.manager.server.clientSequence
+    })
     const packet = new DataPacket(
       CmdID[typeName],
       Buffer.from(PacketHead.encode(header).finish()),//no one cares about packethead
