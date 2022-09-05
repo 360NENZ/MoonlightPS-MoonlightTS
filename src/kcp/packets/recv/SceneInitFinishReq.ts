@@ -148,9 +148,9 @@ export default async function handle(session: Session, packet: DataPacket) {
       SceneTeamUpdateNotify.fromJSON({
         sceneTeamAvatarList: [
           {
-            playerUid: 6064,
-            avatarGuid: 2785642601942876161n,
-            sceneId: 1,
+            playerUid: 1,
+            avatarGuid: 100000,
+            sceneId: 3,
             entityId: 16778494,
             avatarAbilityInfo: {},
             sceneEntityInfo: {

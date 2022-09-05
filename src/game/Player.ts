@@ -24,6 +24,8 @@ export class Player {
         this.playerProp[DataProperties.PROP_IS_MP_MODE_AVAILABLE] = 1
         this.playerProp[DataProperties.PROP_PLAYER_MP_SETTING_TYPE] = 2
         this.playerProp[DataProperties.PROP_PLAYER_WORLD_LEVEL] = 100
+        this.playerProp[DataProperties.PROP_PLAYER_LEVEL] = 100
+        this.playerProp[DataProperties.PROP_PLAYER_EXP] = 999999
     }
 
     getPlayerProp(){

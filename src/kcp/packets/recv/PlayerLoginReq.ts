@@ -15,6 +15,7 @@ import {
   WindSeedClientNotify,
   WindSeedClientNotify_AreaNotify,
   UnlockNameCardNotify,
+  Vector,
 } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
@@ -24,6 +25,7 @@ import { MaterialData } from '../../../game/World';
 import Config from '../../../utils/Config';
 import fs from 'fs';
 import Account from '../../../db/Account';
+import { FightProperty } from '../../../game/managers/constants/FightProperties';
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as PlayerLoginReq;
@@ -122,48 +124,11 @@ export default async function handle(session: Session, packet: DataPacket) {
             prefabPathRemoteHash: '681809261527',
           },
           fetterInfo: {
-            expLevel: 1,
+            expLevel: 10,
             fetterList: [],
           },
-          fightPropMap: {
-            '1': 3023.5457,
-            '2': 430,
-            '4': 82.297554,
-            '6': 0,
-            '7': 189.76102,
-            '8': 107.78,
-            '20': 0.085,
-            '21': 0,
-            '22': 0.5466,
-            '23': 1,
-            '26': 0,
-            '27': 0,
-            '28': 0,
-            '29': 0,
-            '30': 0,
-            '40': 0,
-            '41': 0,
-            '42': 0,
-            '43': 0,
-            '44': 0,
-            '45': 0,
-            '46': 0,
-            '50': 0,
-            '51': 0,
-            '52': 0,
-            '53': 0,
-            '54': 0,
-            '55': 0,
-            '56': 0,
-            '76': 60,
-            '1006': 60,
-            '1010': 3453.5457,
-            '2000': 3453.5457,
-            '2001': 82.297554,
-            '2002': 297.54102,
-            '2003': 0,
-          },
-          guid: '3591170976802406401',
+          fightPropMap: FightProperty.getPropertiesMap(),
+          guid: '100000',
           inherentProudSkillList: [92101],
           lifeState: 1,
           pendingPromoteRewardList: [3, 5],
@@ -194,9 +159,9 @@ export default async function handle(session: Session, packet: DataPacket) {
           },
           skillDepotId: 706,
           skillLevelMap: {
-            '10077': 1,
-            '10078': 1,
-            '100555': 1,
+            '10077': 15,
+            '10078': 15,
+            '100555': 15,
           },
           talentIdList: [91, 92],
           wearingFlycloakId: 140009,
@@ -204,40 +169,43 @@ export default async function handle(session: Session, packet: DataPacket) {
       ],
       avatarTeamMap: {
         '1': {
-          avatarGuidList: ['3591170976802406401'],
+          avatarGuidList: ['100000'],
         },
         '2': {},
         '3': {},
         '4': {},
       },
-      chooseAvatarGuid: '3591170976802406401',
+      chooseAvatarGuid: '100000',
       curAvatarTeamId: 1,
       ownedCostumeList: [200302, 202101, 204101, 204501],
       ownedFlycloakList: [140001, 140002,140003,140004,140005,140006,140007,140008,140009,140010],
     })
   );
 
-  session.send(
-    PlayerEnterSceneNotify,
-    PlayerEnterSceneNotify.fromJSON({
-      enterReason: 1,
-      enterSceneToken: 21966,
-      isFirstLoginEnterScene: true,
-      pos: {
-        x: 1637.9087,
-        y: 194.76117,
-        z: -2660.4922,
-      },
-      sceneBeginTime: '1657038064326',
-      sceneId: 3,
-      sceneTagIdList: [107, 113, 117, 125, 134, 139, 141],
-      sceneTransaction: '3-836134650-1657038064-179709',
-      targetUid: 1,
-      type: 'ENTER_TYPE_SELF',
-      worldLevel: 3,
-      worldType: 1,
-    })
-  );
+  const sceneTags: number[] = []
+
+  for(let i = 0; i < 3000; i++){
+    sceneTags.push(i)
+  }
+
+  session.send(PlayerEnterSceneNotify,PlayerEnterSceneNotify.fromPartial({
+    enterReason: 1,
+    enterSceneToken: 21966,
+    isFirstLoginEnterScene: true,
+    pos: Vector.fromPartial({
+      x: 1000,
+      y: 200,
+      z: -2000
+    }),
+    sceneBeginTime: Date.now(),
+    sceneId: 3,
+    sceneTagIdList: sceneTags,
+    sceneTransaction: '3-1-'+String(Math.floor(Date.now()/1000))+'-18402',
+    targetUid: 1,
+    type: EnterType.ENTER_TYPE_SELF,
+    worldLevel: 8,
+    worldType: 1
+  }))
 
   session.send(
     PlayerLoginRsp,
