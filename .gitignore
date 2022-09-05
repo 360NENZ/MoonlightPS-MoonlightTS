@@ -111,6 +111,7 @@ dist
 config.json
 src/data/proto/*.proto
 src/data/resources
+src/data/windy
 
 
 log.txt

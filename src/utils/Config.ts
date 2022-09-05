@@ -1,6 +1,8 @@
-import fs from 'fs';
-import { resolve } from 'path';
+import { readFileSync, readdirSync, writeFileSync } from "fs";
+import path, { resolve } from 'path';
 import { VerboseLevel } from './Logger';
+
+
 
 const DEFAULT_CONFIG = {
     // General
@@ -19,8 +21,11 @@ const DEFAULT_CONFIG = {
     // Dispatch
     DISPATCH: [{
         DISPATCH_NAME: "MoonlightTS",
-        DISPATCH_URL: "https://osasiadispatch/query_cur_region"
+        DISPATCH_URL: "https://osasiadispatch.yuanshen.com/query_cur_region"
     }],
+
+    //Windy folder path
+    WINDY: "../data/windy/",
 
     // GameServer
     GAMESERVER: {
@@ -35,7 +40,12 @@ const DEFAULT_CONFIG = {
 type DefaultConfig = typeof DEFAULT_CONFIG;
 
 function r(...args: string[]) {
-    return fs.readFileSync(resolve(__dirname, ...args)).toString();
+    return readFileSync(resolve(__dirname, ...args)).toString();
+    console.log(resolve(__dirname, ...args))
+}
+
+function rd(...args: string[]) {
+    return readdirSync(resolve(__dirname, ...args)).toString();
 }
 
 function readConfig(): any {
@@ -62,7 +72,12 @@ function readConfig(): any {
 }
 
 function updateConfig(config: any) {
-    fs.writeFileSync('./config.json', JSON.stringify(config, null, 2));
+    writeFileSync('./config.json', JSON.stringify(config, null, 2));
+}
+
+export function resolveWindyPath(folder: string,file: string){
+    const pathData = r(folder,file,'.luac')
+    return pathData
 }
 
 export default class Config {
@@ -77,6 +92,7 @@ export default class Config {
         DISPATCH_NAME: string;
         DISPATCH_URL: string;
     }[] = Config.config.DISPATCH;
+    public static WINDY: string = Config.config.WINDY; 
     public static GAMESERVER: {
         SERVER_IP: string;
         SERVER_PORT: number;
@@ -86,4 +102,9 @@ export default class Config {
     public static AUTO_ACCOUNT: boolean = Config.config.AUTO_ACCOUNT;
 
     private constructor() { }
+
+    public static resolveWindyPath(file: string){
+        const pathData = this.WINDY+"\\"+file+".luac"
+        return pathData
+    }
 }

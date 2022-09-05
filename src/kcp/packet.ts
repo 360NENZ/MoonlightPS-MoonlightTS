@@ -1,3 +1,5 @@
+import { PacketHead } from "../data/proto/game";
+
 const MAGIC_START = 0x4567; //0x4567  = GI SR = 0x01234567
 const MAGIC_END = 0x89ab; // 0x89ab = GI SR = 0x89abcdef
 
@@ -34,17 +36,29 @@ export class DataPacket {
   }
 
   encode() {
-    const buffer = Buffer.allocUnsafe(DataPacket.minimumSize + this.metadata.length + this.data.length);
+    // const buffer = Buffer.allocUnsafe(DataPacket.minimumSize + this.metadata.length + this.data.length);
 
-    buffer.writeUInt16BE(MAGIC_START); //MAGIC START 2 bytes
-    buffer.writeUInt16BE(this.id, 2); //CMDID 2 bytes
-    buffer.writeUInt16BE(this.metadata.length, 4); // PacketHead Length 2 bytes
-    buffer.writeUInt32BE(this.data.length, 6); // Data Length 4 bytes
-    this.metadata.copy(buffer, 10); // PacketHead bytes size bytes
-    this.data.copy(buffer, 10 + this.metadata.length); // Data bytes size bytes
-    buffer.writeUInt16BE(MAGIC_END, 10 + this.metadata.length + this.data.length); // MAGIC END 2 bytes
+    // buffer.writeUInt16BE(MAGIC_START); //MAGIC START 2 bytes
+    // buffer.writeUInt16BE(this.id, 2); //CMDID 2 bytes
+    // buffer.writeUInt16BE(this.metadata.length, 4); // PacketHead Length 2 bytes
+    // buffer.writeUInt32BE(this.data.length, 6); // Data Length 4 bytes
+    // this.metadata.copy(buffer, 10); // PacketHead bytes size bytes
+    // this.data.copy(buffer, 10 + this.metadata.length); // Data bytes size bytes
+    // buffer.writeUInt16BE(MAGIC_END, 10 + this.metadata.length + this.data.length); // MAGIC END 2 bytes
 
-    return buffer;
+	const new_metadata = Buffer.from(PacketHead.encode(PacketHead.fromPartial({recvTimeMs: Date.now()})).finish())
+
+	const magic2 = Buffer.from(0x89AB.toString(16), 'hex')
+    const part1 = Buffer.alloc(10)
+
+    part1.writeUInt16BE(0x4567, 0)
+    part1.writeUInt16BE(this.id, 2)
+    part1.writeUInt16BE(new_metadata.length, 4)
+    part1.writeUInt32BE(this.data.length, 6)
+
+    const ret = Buffer.concat([part1, new_metadata, this.data, magic2], part1.length + new_metadata.length + this.data.length + magic2.length)
+
+    return ret;
   }
 }
 

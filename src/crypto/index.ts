@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
-import path from "path";
+import path, { resolve } from 'path';
 import { constants as CryptoConsts, createSign, createVerify, privateDecrypt, publicEncrypt } from 'crypto'
-import { resolve } from 'path';
+
 
 function r(...args: string[]) {
   return readFileSync(resolve(__dirname, ...args)).toString();

@@ -17,7 +17,6 @@ import { PacketHead } from '../data/proto/game';
 import Interface from '../commands/Interface';
 import Logger, { VerboseLevel } from '../utils/Logger';
 import ProtoFactory, { MessageType } from '../utils/ProtoFactory';
-import defaultHandler from './packets/recv/PacketHandler';
 
 const c = new Logger('KCP', 'red');
 const loopPackets: string[] = ['PingReq', 'PingRsp'];
@@ -136,22 +135,7 @@ export class KcpServer extends ServiceBase<Executor> {
 
       for (const packet of connection) {
 
-        const packetName = CmdID[packet.id]
-        const data = packet.data
-
-        if (Config.VERBOSE_LEVEL >= VerboseLevel.WARNS && !loopPackets.includes(packetName)) {
-          c.log(`Recv : ${packetName} (${packet.id})`);
-        }
-
-        import(`./packets/recv/${packetName}`).then(async mod => {
-          await mod.default(connection.getSession(), packet);
-      }).catch(e => {
-          if (e.code === 'MODULE_NOT_FOUND') c.warn(`Unhandled packet: ${packetName}`);
-          else c.error(e);
-
-          defaultHandler(connection.getSession(), packet);
-      });
-
+        connection.getSession().handle(packet);
 
         // this.router.handle(exec, connection, packet);
       }
@@ -242,6 +226,7 @@ export class KcpConnection {
   readonly kcp;
   readonly encryptor;
   private readonly session;
+  c: Logger = c
 
   constructor(
     readonly manager: KcpConnectionManager,

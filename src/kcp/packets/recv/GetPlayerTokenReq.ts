@@ -7,7 +7,7 @@ import * as crypto from '../../../crypto'
 export default async function handle(session: Session, packet: DataPacket) {
     const body = ProtoFactory.getBody(packet) as GetPlayerTokenReq;
 
-    const seed = 0x0n; //Generate a random seed
+    const seed = 0x0n; //create a random seed
 
     const encrypted_client_seed = Buffer.from(body.clientSeed, 'base64'); //Get encrypted seed from client
     const decrypted_client_seed = crypto.rsaDecrypt(
@@ -25,7 +25,6 @@ export default async function handle(session: Session, packet: DataPacket) {
       .rsaSign(crypto.signingKey, seedBuf)
       .toString('base64'); // sign with signing key
 
-    session.connection.encryptor.seed(seed);
 
     const dataObj: GetPlayerTokenRsp = GetPlayerTokenRsp.fromPartial({
         retcode: 0,
@@ -39,4 +38,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     })
 
     session.send(GetPlayerTokenRsp, dataObj);
+
+    session.connection.encryptor.seed(seed);
 }
