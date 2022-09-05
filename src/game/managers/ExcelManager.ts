@@ -3,7 +3,7 @@ import Logger from '../../utils/Logger';
 import { Material } from './Types/material';
 
 import { resolve } from 'path';
-import { AbilityEmbryo,AvatarInfo } from '../../data/proto/game';
+import { AbilityEmbryo, AvatarInfo } from '../../data/proto/game';
 
 function r(...args: string[]) {
   return readFileSync(resolve(__dirname, ...args)).toString();
@@ -15,40 +15,66 @@ export class ExcelManager {
   public static materials: Material[] = [];
   public static namecards: number[] = [];
   public static emojis: number[] = [];
-  public static embryos: { [type: string]: AbilityEmbryo[] } = {}
+  public static embryos: { [type: string]: AbilityEmbryo[] } = {};
   public static avatars: AvatarInfo[] = [];
+  public static AvatarExcelConfigData: {};
+  public static AvatarSkillDepotExcelConfigData: {};
+  public static GadgetExcelConfigData: {};
+  public static MonsterExcelConfigData: {};
+  public static WeaponExcelConfigData: {};
 
   static init() {
     this.initMaterialExcel();
     this.initChatEmojiExcel();
 
-    const AvatarExcelConfigData = JSON.parse(r('../../data/resources/ExcelBinOutput/AvatarExcelConfigData.json'))
-    const AvatarSkillDepotExcelConfigData = JSON.parse(r('../../data/resources/ExcelBinOutput/AvatarSkillDepotExcelConfigData.json'))
-    const GadgetExcelConfigData = JSON.parse(r('../../data/resources/ExcelBinOutput/GadgetExcelConfigData.json'))
-    const MonsterExcelConfigData = JSON.parse(r('../../data/resources/ExcelBinOutput/MonsterExcelConfigData.json'))
-    const WeaponExcelConfigData = JSON.parse(r('../../data/resources/ExcelBinOutput/WeaponExcelConfigData.json'))
+    this.AvatarExcelConfigData = this.loadResourceFile(
+      'AvatarExcelConfigData'
+    );
+    this.AvatarSkillDepotExcelConfigData = this.loadResourceFile(
+      'AvatarSkillDepotExcelConfigData'
+    );
+    this.GadgetExcelConfigData = this.loadResourceFile(
+      'GadgetExcelConfigData'
+    );
+    this.MonsterExcelConfigData = this.loadResourceFile(
+      'MonsterExcelConfigData'
+    );
+    this.WeaponExcelConfigData = this.loadResourceFile(
+      'WeaponExcelConfigData'
+    );
   }
 
-  public static getEmbryos(character: string){
-    const files = readdirSync(resolve(__dirname,'../../data/resources/BinOutput/Avatar'))
-    for (const file of files){
-      if(file.includes('Manekin') || file.includes('Test') || file.includes('Nude')){
+  public static getEmbryos() {
+    const files = readdirSync(
+      resolve(__dirname, '../../data/resources/BinOutput/Avatar')
+    );
+    for (const file of files) {
+      if (
+        file.includes('Manekin') ||
+        file.includes('Test') ||
+        file.includes('Nude')
+      ) {
         continue;
-      }else{
-        const binData = JSON.parse(r('../../data/resources/BinOutput/Avatar',file))
-        if(binData['abilities'] === undefined){
+      } else {
+        const binData = this.loadResourceFile(
+          `/Avatar/${file}`,
+          ResourceType.BinOutput
+        );
+        if (binData['abilities'] === undefined) {
           continue;
         }
 
-        const abilities: AbilityEmbryo[] = []
-        //@ts-ignore 
-        binData['abilities'].forEach(element=>{
-          abilities.push(AbilityEmbryo.fromPartial({
-            abilityId: element['abilityID'],
-            abilityNameHash: element['abilityName'],
-            abilityOverrideNameHash: element['abilityOverride']
-          }))
-        })
+        const abilities: AbilityEmbryo[] = [];
+        //@ts-ignore
+        binData['abilities'].forEach((element) => {
+          abilities.push(
+            AbilityEmbryo.fromPartial({
+              abilityId: element['abilityID'],
+              abilityNameHash: element['abilityName'],
+              abilityOverrideNameHash: element['abilityOverride'],
+            })
+          );
+        });
         this.embryos[file] = abilities;
       }
     }
@@ -62,8 +88,8 @@ export class ExcelManager {
         itemType: string;
         materialType?: string;
       }
-    ] = JSON.parse(
-      r('../../data/resources/ExcelBinOutput/MaterialExcelConfigData.json')
+    ] = this.loadResourceFile(
+      'MaterialExcelConfigData'
     );
     _materials.forEach((element) => {
       switch (element.itemType) {
@@ -81,16 +107,38 @@ export class ExcelManager {
           break;
       }
     });
-    c.log('Successfuly loaded MaterialExcelConfigData.json');
   }
 
   private static initChatEmojiExcel() {
-    const _emojis: [{ id: number }] = JSON.parse(
-      r('../../data/resources/ExcelBinOutput/EmojiDataExcelConfigData.json')
+    const _emojis: [{ id: number }] = this.loadResourceFile(
+      'EmojiDataExcelConfigData'
     );
     _emojis.forEach((element) => {
       this.emojis.push(element.id);
     });
-    c.log('Successfuly loaded EmojiDataExcelConfigData.json');
   }
+
+  private static loadResourceFile(file: string, resourceType: ResourceType = ResourceType.ExcelBinOutput) {
+    try {
+      switch (resourceType) {
+        case ResourceType.ExcelBinOutput:
+          c.log(`Successfuly loaded ${file}.json`);
+          return JSON.parse(
+            r('../../data/resources/ExcelBinOutput', file + '.json')
+          );
+
+        case ResourceType.BinOutput:
+          return JSON.parse(
+            r('../../data/resources/BinOutput', file + '.json')
+          );
+      }
+    } catch {
+      c.error(`Error, could not load ${file}.json`, false);
+    }
+  }
+}
+
+enum ResourceType {
+  ExcelBinOutput,
+  BinOutput,
 }
