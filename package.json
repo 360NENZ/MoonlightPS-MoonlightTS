@@ -28,7 +28,7 @@
     "colorts": "^0.1.63",
     "dgram": "^1.0.1",
     "express": "^4.18.1",
-    "kcp-ts": "github:boba-ps/kcp-ts",
+    "kcp-ts": "github:timing1337/kcp-ts",
     "mongodb": "^4.9.0",
     "protobufjs": "^7.1.0",
     "typescript": "^4.7.4"

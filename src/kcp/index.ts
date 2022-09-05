@@ -163,7 +163,8 @@ export class KcpConnectionManager {
       address,
       port,
       conv,
-      token
+      token,
+      true // Uses 0ms ping (visual btw)
     );
 
     this.store[address] = [...(this.store[address] || []), connection];
@@ -234,7 +235,8 @@ export class KcpConnection {
     readonly address: string,
     readonly port: number,
     readonly conv: number,
-    readonly token: number
+    readonly token: number,
+    readonly useZeroMs: boolean
   ) {
     this.kcp = new Kcp(conv, token, (buffer: Buffer) => {
       // kcp buffer must be cloned because it is reused internally
@@ -245,7 +247,7 @@ export class KcpConnection {
       }
 
       this.sendRaw(buffer);
-    });
+    },false,useZeroMs);
 
     this.kcp.setWndSize(1024, 1024);
     this.encryptor = new KcpConnectionEncryptor(manager.server);
