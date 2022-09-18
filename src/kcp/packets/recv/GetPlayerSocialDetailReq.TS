@@ -22,11 +22,11 @@ export default async function handle(session: Session, packet: DataPacket) {
         onlineState: FriendOnlineState.FRIEND_ONLINE_STATE_ONLINE,
         isFriend: true,
         isMpModeAvailable: false,
-        nameCardId: 210064,
+        nameCardId: 210069,
         finishAchievementNum: 1000,
         signature: '<color=#05d9f>MoonlightTS on TOP!</color>',
         profilePicture: ProfilePicture.fromPartial({
-            avatarId: 10000026
+            avatarId: 10000070
         })
       }),
     })

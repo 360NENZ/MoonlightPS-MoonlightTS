@@ -19,7 +19,6 @@ import Logger, { VerboseLevel } from '../utils/Logger';
 import ProtoFactory, { MessageType } from '../utils/ProtoFactory';
 
 const c = new Logger('KCP', 'red');
-const loopPackets: string[] = ['PingReq', 'PingRsp'];
 
 type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
 

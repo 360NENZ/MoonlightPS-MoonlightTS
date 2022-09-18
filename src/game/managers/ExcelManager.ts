@@ -14,9 +14,11 @@ const c = new Logger('ExcelManager', 'green');
 export class ExcelManager {
   public static materials: Material[] = [];
   public static namecards: number[] = [];
+  public static shopMalls: number[] = [];
   public static emojis: number[] = [];
   public static embryos: { [type: string]: AbilityEmbryo[] } = {};
   public static avatars: AvatarInfo[] = [];
+
   public static AvatarExcelConfigData: {};
   public static AvatarSkillDepotExcelConfigData: {};
   public static GadgetExcelConfigData: {};
@@ -26,6 +28,7 @@ export class ExcelManager {
   static init() {
     this.initMaterialExcel();
     this.initChatEmojiExcel();
+    this.initShopExcelConfigData();
 
     this.AvatarExcelConfigData = this.loadResourceFile(
       'AvatarExcelConfigData'
@@ -135,6 +138,17 @@ export class ExcelManager {
     } catch {
       c.error(`Error, could not load ${file}.json`, false);
     }
+  }
+
+  private static initShopExcelConfigData() {
+    const _shops: [{ shopId: number;shopType: string }] = this.loadResourceFile(
+      'ShopExcelConfigData'
+    );
+    _shops.forEach((element) => {
+      if(element.shopType === "SHOP_TYPE_PAIMON"){
+        this.shopMalls.push(element.shopId);
+      }
+    });
   }
 }
 

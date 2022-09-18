@@ -26,6 +26,7 @@ export class Player {
         this.playerProp[DataProperties.PROP_PLAYER_WORLD_LEVEL] = 100
         this.playerProp[DataProperties.PROP_PLAYER_LEVEL] = 100
         this.playerProp[DataProperties.PROP_PLAYER_EXP] = 999999
+        this.playerProp[DataProperties.PROP_PLAYER_SCOIN] = 999999999
     }
 
     getPlayerProp(){

@@ -10,7 +10,7 @@ import {World} from '../game/World';
 const c = new Logger('Session', 'yellow');
 
 type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
-const loopPackets: string[] = ['PingReq', 'PingRsp','UnlockNameCardNotify'];
+const loopPackets: string[] = ['PingReq', 'PingRsp','UnlockNameCardNotify','EvtDoSkillSuccNotify','UnionCmdNotify'];
 
 export class Session {
   connection: KcpConnection;

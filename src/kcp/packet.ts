@@ -36,15 +36,6 @@ export class DataPacket {
   }
 
   encode() {
-    // const buffer = Buffer.allocUnsafe(DataPacket.minimumSize + this.metadata.length + this.data.length);
-
-    // buffer.writeUInt16BE(MAGIC_START); //MAGIC START 2 bytes
-    // buffer.writeUInt16BE(this.id, 2); //CMDID 2 bytes
-    // buffer.writeUInt16BE(this.metadata.length, 4); // PacketHead Length 2 bytes
-    // buffer.writeUInt32BE(this.data.length, 6); // Data Length 4 bytes
-    // this.metadata.copy(buffer, 10); // PacketHead bytes size bytes
-    // this.data.copy(buffer, 10 + this.metadata.length); // Data bytes size bytes
-    // buffer.writeUInt16BE(MAGIC_END, 10 + this.metadata.length + this.data.length); // MAGIC END 2 bytes
 
 	const new_metadata = Buffer.from(PacketHead.encode(PacketHead.fromPartial({recvTimeMs: Date.now()})).finish())
 
