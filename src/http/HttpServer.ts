@@ -39,7 +39,7 @@ export default class HttpServer {
 
     public start(): void {
         https.createServer(HTTPS_CONFIG, this.server).listen(Config.HTTP.HTTP_PORT, Config.HTTP.HTTP_PORT);
-        this.server.listen(80, Config.HTTP.HTTP_HOST, () => {
+        this.server.listen(Config.HTTP.HTTP_PORT, Config.HTTP.HTTP_HOST, () => {
             c.log(`Listening on ${Config.HTTP.HTTP_HOST}:${Config.HTTP.HTTP_PORT}`);
         });
     }
