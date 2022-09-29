@@ -13,7 +13,6 @@
 
 ```powershell
 git clone https://github.com/MoonlightPS/MoonlightTS.git
-git checkout boba-fork
 ```
 
 2.Extract and open the repository in the Terminal
