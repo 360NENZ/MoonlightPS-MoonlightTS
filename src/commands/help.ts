@@ -8,12 +8,14 @@ export default async function handle(command: Command, executor: boolean) {
   c.log(`${cmds.length} commands available:`);
 
   if (executor) {
+    let out = "Commands: \n"
     cmds.forEach((cmd) => {
         if (cmd.endsWith('.ts')) {
           const cmdName = cmd.replace(/.ts/gm, '');
-          if (cmdName !== 'Interface') Interface.sendMessage(cmdName);
+          if (cmdName !== 'Interface') out += "\t"+cmdName+"\n"
         }
       });
+      Interface.sendMessage(out);
   } else {
     cmds.forEach((cmd) => {
       if (cmd.endsWith('.ts')) {

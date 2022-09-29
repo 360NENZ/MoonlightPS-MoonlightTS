@@ -4,7 +4,15 @@ import Interface, { Command } from './Interface';
 const c = new Logger('/debug', 'blue');
 
 export default async function handle(command: Command, executor: boolean) {
-  if (!command.args[0]) c.log(`VerboseLevel: ${Config.VERBOSE_LEVEL}`);
+  if (!command.args[0]) {
+    if(executor){
+      Interface.sendMessage(`VerboseLevel: ${Config.VERBOSE_LEVEL}`);
+    }else{
+      c.log(`VerboseLevel: ${Config.VERBOSE_LEVEL}`);
+    }
+    return;
+  }
+  
   else {
     let level = parseInt(command.args[0]);
     if (!level) level = 0;

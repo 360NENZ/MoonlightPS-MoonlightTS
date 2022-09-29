@@ -18,6 +18,7 @@ export class ExcelManager {
   public static emojis: number[] = [];
   public static embryos: { [type: string]: AbilityEmbryo[] } = {};
   public static avatars: AvatarInfo[] = [];
+  public static avatarCards: number[] = [];
 
   public static AvatarExcelConfigData: {};
   public static AvatarSkillDepotExcelConfigData: {};
@@ -90,6 +91,7 @@ export class ExcelManager {
         stackLimit: number;
         itemType: string;
         materialType?: string;
+        icon: string;
       }
     ] = this.loadResourceFile(
       'MaterialExcelConfigData'
@@ -107,6 +109,9 @@ export class ExcelManager {
           }
 
           this.materials.push(new Material(element.id, element.stackLimit));
+          if(element.materialType === 'MATERIAL_AVATAR' && element.icon.startsWith('UI_AvatarIcon_')) {
+            this.avatarCards.push(element.id)
+          }
           break;
       }
     });
