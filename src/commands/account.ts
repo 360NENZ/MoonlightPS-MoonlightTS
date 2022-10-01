@@ -16,7 +16,7 @@ export default async function handle(command: Command, executor: false) {
         return;
       }
       try {
-        const acc = await Account.create(command.args[1], command.args[2]);
+        const acc = await Account.create(command.args[1], Number(command.args[2]));
         if (executor) {
           Interface.sendMessage(
             `Account ${acc.name} with UID ${acc.uid} created.`
@@ -37,7 +37,7 @@ export default async function handle(command: Command, executor: false) {
         }
         return;
       }
-      const acc = await Account.fromUID(command.args[1]);
+      const acc = await Account.fromUID(Number(command.args[1]));
       if (!acc) {
         if (executor) {
           Interface.sendMessage(
@@ -48,7 +48,7 @@ export default async function handle(command: Command, executor: false) {
         }
         return;
       }
-      Account.delete(command.args[1]);
+      Account.delete(Number(command.args[1]));
       if (executor) {
         Interface.sendMessage(
           `Account ${acc.name} with UID ${acc.uid} deleted successfully.`

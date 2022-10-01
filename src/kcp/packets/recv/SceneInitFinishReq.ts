@@ -22,9 +22,11 @@ import {
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
+import Account from '../../../db/Account';
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as SceneInitFinishReq;
+  const account = await Account.fromUID(session.uid);
 
   session.send(ServerTimeNotify,ServerTimeNotify.fromPartial({
     serverTime: Date.now()
@@ -59,30 +61,30 @@ export default async function handle(session: Session, packet: DataPacket) {
     WorldPlayerInfoNotify.fromJSON({
       playerInfoList: [
         {
-          uid: 1,
-          nickname: 'tamilpp25',
+          uid: account?.uid,
+          nickname: account?.name,
           playerLevel: 1,
           mpSettingType: 'MP_SETTING_TYPE_ENTER_AFTER_APPLY',
           curPlayerNumInWorld: 1,
-          nameCardId: 210001,
+          nameCardId: 210069,
           profilePicture: {
             avatarId: 10000007,
           },
         },
       ],
-      playerUidList: [1],
+      playerUidList: [account?.uid],
     })
   );
 
   const scene3tags = []
-  for(let i = 101; i< 3000; i++){
+  for(let i = 0; i< 3000; i++){
     scene3tags.push(i)
   }
 
   const scenes: PlayerWorldSceneInfo[] = [
     PlayerWorldSceneInfo.fromPartial({
       sceneId: 1,
-      sceneTagIdList: [],
+      sceneTagIdList: scene3tags,
       isLocked: false
     }),
     PlayerWorldSceneInfo.fromPartial({
@@ -113,22 +115,22 @@ export default async function handle(session: Session, packet: DataPacket) {
   ]
 
 
-  // session.send(PlayerWorldSceneInfoListNotify,PlayerWorldSceneInfoListNotify.fromPartial({
-  //   infoList: scenes
-  // }))
+  session.send(PlayerWorldSceneInfoListNotify,PlayerWorldSceneInfoListNotify.fromPartial({
+    infoList: []
+  }))
 
   session.send(
     ScenePlayerInfoNotify,
     ScenePlayerInfoNotify.fromPartial({
       playerInfoList: [
         {
-          uid: 1,
+          uid: account?.uid,
           peerId: 1,
-          name: 'tamilpp25',
+          name: account?.name,
           sceneId: 3,
           onlinePlayerInfo: {
-            uid: 1,
-            nickname: 'tamilpp25',
+            uid: account?.uid,
+            nickname: account?.name,
             playerLevel: 1,
             profilePicture: {
               avatarId: 10000007,
@@ -189,7 +191,7 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     PlayerGameTimeNotify,
     PlayerGameTimeNotify.fromPartial({
-      uid: 1,
+      uid: account?.uid,
       gameTime: 8 * 60,
     })
   );
@@ -211,7 +213,7 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     HostPlayerNotify,
     HostPlayerNotify.fromPartial({
-      hostUid: 1,
+      hostUid: account?.uid,
       hostPeerId: 1,
     })
   );
@@ -308,7 +310,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               },
             },
             avatar: {
-              uid: 1,
+              uid: account?.uid,
               avatarId: 10000071,
               guid: '296352743474',
               peerId: 1,
@@ -337,7 +339,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               bornTime: 1661971233,
             },
           },
-          playerUid: 69,
+          playerUid: account?.uid,
           abilityControlBlock: {
             abilityEmbryoList: [
               {
@@ -570,7 +572,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               },
             },
             avatar: {
-              uid: 1,
+              uid: account?.uid,
               avatarId: 10000070,
               guid: '296352743475',
               peerId: 1,
@@ -599,7 +601,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               bornTime: 1661971233,
             },
           },
-          playerUid: 69,
+          playerUid: account?.uid,
           abilityControlBlock: {
             abilityEmbryoList: [
               {
@@ -821,7 +823,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               },
             },
             avatar: {
-              uid: 1,
+              uid: account?.uid,
               avatarId: 10000072,
               guid: '296352743473',
               peerId: 1,
@@ -850,7 +852,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               bornTime: 1661971233,
             },
           },
-          playerUid: 69,
+          playerUid: account?.uid,
           abilityControlBlock: {
             abilityEmbryoList: [
               {
@@ -961,4 +963,6 @@ export default async function handle(session: Session, packet: DataPacket) {
       enterSceneToken: body.enterSceneToken,
     })
   );
+
+  session.sceneToken = body.enterSceneToken;
 }

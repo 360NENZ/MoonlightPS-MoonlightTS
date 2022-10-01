@@ -3,19 +3,19 @@ import Database from "./Database";
 const c = new Logger("Account");
 
 interface AccountI {
-    uid: string | number;
+    uid: number;
     name: string;
     token: string;
 }
 
 export default class Account {
-    private constructor(public readonly uid: string | number, public readonly name: string, public readonly token: string) {
+    private constructor(public readonly uid: number, public readonly name: string, public readonly token: string) {
 
     }
 
-    public static async fromUID(uid: string | number): Promise<Account | undefined> {
+    public static async fromUID(uid: number): Promise<Account | undefined> {
         const db = Database.getInstance();
-        const account = await db.get("accounts", { _id: Number(uid) });
+        const account = await db.get("accounts", { _id: uid });
         if (!account) return;
         return new Account(Number(account._id.toString()), account.name, account.token);
     }
@@ -34,7 +34,7 @@ export default class Account {
         return new Account(Number(account._id.toString()), account.name, account.token);
     }
 
-    public static async create(name: string, uid?: string | number): Promise<Account> {
+    public static async create(name: string, uid?: number): Promise<Account> {
         const db = Database.getInstance();
         let selfAssignedUID = true;
         if (!uid) {
@@ -52,22 +52,22 @@ export default class Account {
         }
 
         const token = generateToken();
-        await db.set("accounts", { _id: Number(uid), name, token });
-        return new Account(Number(uid), name, token);
+        await db.set("accounts", { _id: uid, name, token });
+        return new Account(uid, name, token);
     }
 
-    public static async delete(uid: string | number): Promise<void> {
+    public static async delete(uid: number): Promise<void> {
         const db = Database.getInstance();
         const account = await Account.fromUID(uid);
         if (!account) {
             throw new Error(`Account with uid ${uid} does not exist.`);
         }
-        await db.delete("accounts", { _id: Number(uid) });
+        await db.delete("accounts", { _id: uid });
     }
 
     public async save() {
         const db = Database.getInstance();
-        await db.update("accounts", { _id: Number(this.uid) }, this);
+        await db.update("accounts", { _id: this.uid }, this);
     }
 }
 

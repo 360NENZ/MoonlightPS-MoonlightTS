@@ -16,6 +16,8 @@ export class Session {
   connection: KcpConnection;
   private player: Player;
   private world: World;
+  public uid: number = 0;
+  public sceneToken: number = 0;
   c: Logger;
 
   constructor(connection: KcpConnection) {

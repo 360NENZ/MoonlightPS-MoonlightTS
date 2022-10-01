@@ -144,7 +144,7 @@ export default async function handle(session: Session, packet: DataPacket) {
                       "7132": 3
                   },
                   "wearingFlycloakId": 140001,
-                  "bornTime": 1661971233
+                  "bornTime": Date.now()
               }
           }
       ]

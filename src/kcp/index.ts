@@ -31,7 +31,6 @@ export abstract class KcpHandler extends ServiceBase<KcpServer> {}
 export class KcpServer extends ServiceBase<Executor> {
   readonly udp;
   readonly connections;
-  // readonly router;
 
   // optimization
   readonly sharedBuffer;

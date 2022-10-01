@@ -26,6 +26,7 @@ export default async function handle(command: Command) {
         }),
       })
     );
+    Interface.sendMessage('Windy!');
   } catch {
     c.error(`Error occurred while executing file ${command.args[0]}.luac`,false);
   }
