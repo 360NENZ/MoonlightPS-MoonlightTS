@@ -109,7 +109,7 @@ export class ExcelManager {
           }
 
           this.materials.push(new Material(element.id, element.stackLimit));
-          if(element.materialType === 'MATERIAL_AVATAR' && element.icon.startsWith('UI_AvatarIcon_')) {
+          if(element.materialType === 'MATERIAL_AVATAR' && element.icon.startsWith('UI_AvatarIcon_') && !element.icon.includes('Play')) {
             this.avatarCards.push(element.id)
           }
           break;
