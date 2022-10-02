@@ -76,47 +76,32 @@ export default async function handle(session: Session, packet: DataPacket) {
     })
   );
 
-  const scene3tags = []
+  const scenetags = []
   for(let i = 0; i< 3000; i++){
-    scene3tags.push(i)
+    scenetags.push(i)
   }
 
   const scenes: PlayerWorldSceneInfo[] = [
-    PlayerWorldSceneInfo.fromPartial({
-      sceneId: 1,
-      sceneTagIdList: scene3tags,
-      isLocked: false
-    }),
-    PlayerWorldSceneInfo.fromPartial({
-      sceneId: 3,
-      sceneTagIdList: scene3tags,
-      isLocked: false
-    }),
-    PlayerWorldSceneInfo.fromPartial({
-      sceneId: 4,
-      sceneTagIdList: [106,109,117],
-      isLocked: false
-    }),
-    PlayerWorldSceneInfo.fromPartial({
+    PlayerWorldSceneInfo.fromPartial({ //Enkanomia
       sceneId: 5,
-      sceneTagIdList: [],
+      sceneTagIdList: scenetags,
       isLocked: false
     }),
-    PlayerWorldSceneInfo.fromPartial({
+    PlayerWorldSceneInfo.fromPartial({ //Underground mines
       sceneId: 6,
-      sceneTagIdList: [],
+      sceneTagIdList: scenetags,
       isLocked: false
     }),
-    PlayerWorldSceneInfo.fromPartial({
-      sceneId: 7,
-      sceneTagIdList: [],
+    PlayerWorldSceneInfo.fromPartial({ //GAA
+      sceneId: 9,
+      sceneTagIdList: scenetags,
       isLocked: false
     }),
   ]
 
 
   session.send(PlayerWorldSceneInfoListNotify,PlayerWorldSceneInfoListNotify.fromPartial({
-    infoList: []
+    infoList: scenes
   }))
 
   session.send(

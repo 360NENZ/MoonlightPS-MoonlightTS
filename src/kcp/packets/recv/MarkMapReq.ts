@@ -18,7 +18,7 @@ export default async function handle(session: Session, packet: DataPacket) {
   if (body.op === MarkMapReq_Operation.OPERATION_ADD) {
     if (
       body.mark &&
-      body.mark.pointType === MapMarkPointType.MAP_MARK_POINT_TYPE_COLLECTION
+      body.mark.pointType === MapMarkPointType.MAP_MARK_POINT_TYPE_FISH_POOL
     ) {
       const mark = body.mark;
 
@@ -35,7 +35,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               motionInfo: {
                 pos: {
                   x: mark.pos?.x,
-                  y: 300,
+                  y: 500,
                   z: mark.pos?.z,
                 },
                 rot: {
