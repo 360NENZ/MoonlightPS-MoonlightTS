@@ -78,16 +78,22 @@ export default async function handle(session: Session, packet: DataPacket) {
     furnitureCountLimit: 2000,
   });
 
-  session.send(
-    WindSeedClientNotify,
-    WindSeedClientNotify.fromPartial({
-      areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
-        areaId: 1,
-        areaType: 1,
-        areaCode: fs.readFileSync(Config.resolveWindyPath('uid')),
-      }),
-    })
-  );
+  try {
+    session.send(
+      WindSeedClientNotify,
+      WindSeedClientNotify.fromPartial({
+        areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
+          areaId: 1,
+          areaType: 1,
+          areaCode: fs.readFileSync(Config.resolveWindyPath('uid')),
+        }),
+      })
+    );
+  } catch {
+    session.c.warn('UID windy file not found...')
+  }
+
+  
 
   let items: any[] = [];
 
