@@ -9,7 +9,7 @@ import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import { ExcelManager } from '../../../game/managers/ExcelManager';
-import { getRandomInt } from '../../../utils/math';
+import { getRandomInt } from '../../../utils/Math';
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as DoGachaReq;
