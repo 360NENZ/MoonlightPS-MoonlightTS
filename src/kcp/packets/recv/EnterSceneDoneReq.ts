@@ -13,7 +13,7 @@ import {
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
-import { GameConstants } from '../../../utils/Constants';
+import { GameConstants } from '../../../game/Constants';
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as EnterSceneDoneReq;
