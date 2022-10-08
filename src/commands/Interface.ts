@@ -7,7 +7,6 @@ import { ChatInfo, PrivateChatNotify } from '../data/proto/game';
 const c = new Logger('Command', 'blue');
 const alias: { [key: string]: string } = _alias;
 
-
 export class Command {
   public readonly name: string;
   public readonly args: string[];
@@ -25,9 +24,19 @@ export default class Interface {
     output: process.stdout,
   });
 
+  private static isExecutor = false;
+
+  static handleMessage(str: string) {
+    if (!this.isExecutor) {
+      Interface.sendMessage(str);
+    } else {
+      c.log(str);
+    }
+  }
+
   private static seq = 1;
 
-  public static chatHistory: ChatInfo[] = []
+  public static chatHistory: ChatInfo[] = [];
 
   public static session?: Session;
 
@@ -39,10 +48,11 @@ export default class Interface {
         Interface.start(false);
         return;
       }
+      this.isExecutor = executor;
       const cmd = new Command(_command);
       import(`./${alias[cmd.name] || cmd.name}`)
         .then(async (module) => {
-          await module.default(cmd,executor);
+          await module.default(cmd, executor);
         })
         .catch((err) => {
           if (err.code == 'MODULE_NOT_FOUND') {
@@ -60,19 +70,19 @@ export default class Interface {
     });
   };
 
-  private static generateChatData(text: string){
+  private static generateChatData(text: string) {
     const msg: ChatInfo = ChatInfo.fromPartial({
-        time: Date.now(),
-        sequence: ++this.seq,
-        toUid: 1,
-        uid: 99,
-        isRead: false,
-        text: text,
-      })
+      time: Date.now(),
+      sequence: ++this.seq,
+      toUid: 1,
+      uid: 99,
+      isRead: false,
+      text: text,
+    });
 
-      this.chatHistory.push(msg)
+    this.chatHistory.push(msg);
 
-    return msg
+    return msg;
   }
 
   public static sendMessage(text: string) {
