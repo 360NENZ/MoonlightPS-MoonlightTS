@@ -16,6 +16,7 @@ import {
   WindSeedClientNotify_AreaNotify,
   UnlockNameCardNotify,
   Vector,
+  ActivityScheduleInfoNotify,
 } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
@@ -26,6 +27,7 @@ import Config from '../../../utils/Config';
 import fs from 'fs';
 import Account from '../../../db/Account';
 import { FightProperty } from '../../../game/managers/constants/FightProperties';
+import { ConfigManager } from '../../../game/managers/ConfigManager';
 
 /* PlayerLoginReq sequence
 
@@ -22165,29 +22167,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     sceneTags.push(i);
   }
 
-  // session.send(
-  //   PlayerEnterSceneNotify,
-  //   PlayerEnterSceneNotify.fromPartial({
-  //     enterReason: 1,
-  //     enterSceneToken: 21966,
-  //     isFirstLoginEnterScene: true,
-  //     pos: Vector.fromPartial({
-  //       x: 1000,
-  //       y: 200,
-  //       z: -2000,
-  //     }),
-  //     sceneBeginTime: Date.now(),
-  //     sceneId: 3,
-  //     sceneTagIdList: sceneTags,
-  //     sceneTransaction:
-  //       '3-1-' + String(Math.floor(Date.now() / 1000)) + '-18402',
-  //     targetUid: 1,
-  //     type: EnterType.ENTER_TYPE_SELF,
-  //     worldLevel: 8,
-  //     worldType: 1,
-  //   })
-  // );
-
   session.send(
     PlayerEnterSceneNotify,
     PlayerEnterSceneNotify.fromJSON({
@@ -22206,6 +22185,13 @@ export default async function handle(session: Session, packet: DataPacket) {
         z: -960.863037109375,
       },
       enterSceneToken: 8981,
+    })
+  );
+
+   session.send(
+    ActivityScheduleInfoNotify,
+    ActivityScheduleInfoNotify.fromPartial({
+      activityScheduleList: ConfigManager.ActivityManager.scheduleActivities
     })
   );
 
