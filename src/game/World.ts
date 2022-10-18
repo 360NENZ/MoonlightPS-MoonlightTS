@@ -1,5 +1,11 @@
-import { ProtEntityType } from '../data/proto/game';
+import {
+  ProtEntityType,
+  SceneEntityAppearNotify,
+  SceneEntityDisappearNotify,
+  VisionType,
+} from '../data/proto/game';
 import { Session } from '../kcp/session';
+import { Entity } from './entity/entity';
 import { DataProperties } from './managers/constants/DataProperties';
 
 export class MaterialData {
@@ -11,16 +17,16 @@ export class MaterialData {
 }
 
 export class World {
-  private session: Session;
+  public session: Session;
 
-  private entities: number[] = [];
+  public entities: { [key: number]: Entity } = [];
 
-  private guid: number = 2;
-  private entityId: number = 0;
+  public guid: number = 2;
+  public entityId: number = 0;
 
-  private mpLevelentityId: number;
+  public mpLevelentityId: number;
 
-  private sceneId: number = 1;
+  public sceneId: number = 3;
 
   constructor(session: Session) {
     this.session = session;
@@ -33,19 +39,55 @@ export class World {
     return (protEntityType << 24) + ++this.entityId;
   }
 
-  public getWorldLevel(){
-    return this.session.getPlayer().getPlayerProp()[DataProperties.PROP_PLAYER_WORLD_LEVEL];
+  public getWorldLevel() {
+    return this.session.getPlayer().getPlayerProp()[
+      DataProperties.PROP_PLAYER_WORLD_LEVEL
+    ];
   }
 
-  public getNextGuid(){
+  public getNextGuid() {
     return ++this.guid;
   }
 
-  public getSceneId(){
+  public getSceneId() {
     return this.sceneId;
   }
 
-  public setSceneId(sceneId: number){
+  public setSceneId(sceneId: number) {
     this.sceneId = sceneId;
+  }
+
+  public killEntity(entity: Entity, visionType = VisionType.VISION_TYPE_DIE) {
+    this.session.send(
+      SceneEntityDisappearNotify,
+      SceneEntityDisappearNotify.fromPartial({
+        entityList: [entity.getId()],
+        disappearType: visionType,
+      })
+    );
+    this.entities[entity.getId()] === undefined;
+  }
+
+  public addEntity(entity: Entity, visionType = VisionType.VISION_TYPE_DIE) {
+    this.session.send(
+      SceneEntityAppearNotify,
+      SceneEntityAppearNotify.fromPartial({
+        entityList: [entity.getSceneEntityInfo()],
+        appearType: visionType,
+      })
+    );
+    this.entities[entity.getId()] = entity;
+  }
+
+  public getEntityById(id: number) {
+    return this.entities[id] ?? null;
+  }
+
+  public getEntityByGuid(guid: number) {
+    for (let entity of Object.values(this.entities)) {
+      if (entity.getGuid() === guid) {
+        return entity;
+      }
+    }
   }
 }

@@ -18,19 +18,21 @@ export default async function handle(session: Session, packet: DataPacket) {
     GetPlayerSocialDetailRsp,
     GetPlayerSocialDetailRsp.fromPartial({
       detailData: SocialDetail.fromPartial({
-        uid: body.uid,
-        nickname: `<color=#05d9f>${acc?.name}</color>`,
+        uid: 1,
+        nickname: `<color=#2ba1f0>${acc?.name}</color>`,
         level: 60,
         onlineState: FriendOnlineState.FRIEND_ONLINE_STATE_ONLINE,
         isFriend: true,
-        isMpModeAvailable: false,
-        nameCardId: 210069,
+        isMpModeAvailable: true,
+        nameCardId: 210132,
         finishAchievementNum: 1000,
-        signature: '<color=#05d9f>MoonlightTS on TOP!</color>',
+        signature: '<color=#2ba1f0>MoonlightTS on TOP!</color>',
         profilePicture: ProfilePicture.fromPartial({
-            avatarId: 10000070
+            avatarId: 10000070,
         })
       }),
     })
   );
+
+  session.send
 }

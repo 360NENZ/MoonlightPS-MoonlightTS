@@ -12,6 +12,7 @@ import { ExcelManager } from './game/managers/ExcelManager';
 import ProtoFactory from './utils/ProtoFactory';
 import { FightProperty } from './game/managers/constants/FightProperties';
 import { ConfigManager } from './game/managers/ConfigManager';
+import { EntityProperty } from './game/managers/constants/EntityProperties';
 
 const c = new Logger('MoonlightTS');
 c.log('Starting MoonlightTS...');
@@ -21,8 +22,9 @@ ProtoFactory.init();
 Interface.start();
 
 // Data stuff
-ExcelManager.init();
 FightProperty.init();
+EntityProperty.init();
+ExcelManager.init();
 ConfigManager.init();
 
 new SystemExecutor().register(new KcpServer()).start(100);

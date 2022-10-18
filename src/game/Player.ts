@@ -1,14 +1,17 @@
-import { PropValue } from "../data/proto/game";
+import { PropValue, Vector } from "../data/proto/game";
 import { Session } from "../kcp/session";
+import { GameConstants } from "./Constants";
 import { DataProperties } from "./managers/constants/DataProperties";
 
 export class Player {
     readonly session: Session
     private playerProp: { [type: number]: number } = {}
+    public position: Vector
 
     constructor(session: Session){
         this.session = session
         this.initNewProp()
+        this.position = GameConstants.START_POSITION
     }
 
     private initNewProp() {

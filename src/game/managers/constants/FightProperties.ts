@@ -1,3 +1,5 @@
+import { FightPropPair } from "../../../data/proto/game";
+
 enum FightProperties {
   FIGHT_PROP_NONE = 0,
   FIGHT_PROP_BASE_HP = 1,
@@ -98,9 +100,10 @@ enum FightProperties {
 }
 
 export class FightProperty {
-  private static fightProp: {[type: number]: number} = {}
+  private static fightProp: { [type: number]: number } = {};
+  private static fightPropPair: FightPropPair[] = []
 
-  public static init(){
+  public static init() {
     this.fightProp[FightProperties.FIGHT_PROP_BASE_HP] = 50000;
     this.fightProp[FightProperties.FIGHT_PROP_MAX_HP] = 50000;
     this.fightProp[FightProperties.FIGHT_PROP_BASE_DEFENSE] = 3000;
@@ -128,10 +131,20 @@ export class FightProperty {
     this.fightProp[FightProperties.FIGHT_PROP_CUR_ATTACK] = 3000;
     this.fightProp[FightProperties.FIGHT_PROP_SKILL_CD_MINUS_RATIO] = 1;
     this.fightProp[FightProperties.FIGHT_PROP_SPEED_PERCENT] = 2;
-  }
 
+    for(let val of Object.keys(this.fightProp)){
+      this.fightPropPair.push(FightPropPair.fromPartial({
+        propType: Number(val),
+        propValue: this.fightProp[Number(val)]
+      }))
+    }
+  }
 
   public static getPropertiesMap() {
     return this.fightProp;
+  }
+
+  public static getPropertiesPair(){
+    return this.fightPropPair
   }
 }

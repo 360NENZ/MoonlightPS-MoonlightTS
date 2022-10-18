@@ -14,6 +14,7 @@ import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import { GameConstants } from '../../../game/Constants';
+import { FightProperty } from '../../../game/managers/constants/FightProperties';
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as EnterSceneDoneReq;
@@ -47,56 +48,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               },
             },
           ],
-          fightPropList: [
-            {
-              propType: 1010,
-              propValue: 12490.830078125,
-            },
-            {
-              propType: 4,
-              propValue: 341.35223388671875,
-            },
-            {
-              propType: 2002,
-              propValue: 859.2437744140625,
-            },
-            {
-              propType: 2001,
-              propValue: 341.35223388671875,
-            },
-            {
-              propType: 2000,
-              propValue: 12490.830078125,
-            },
-            {
-              propType: 1,
-              propValue: 12490.830078125,
-            },
-            {
-              propType: 71,
-              propValue: 80.0,
-            },
-            {
-              propType: 1001,
-              propValue: 13.0,
-            },
-            {
-              propType: 7,
-              propValue: 859.2437744140625,
-            },
-            {
-              propType: 23,
-              propValue: 1.0,
-            },
-            {
-              propType: 22,
-              propValue: 0.8840000033378601,
-            },
-            {
-              propType: 20,
-              propValue: 0.05000000074505806,
-            },
-          ],
+          fightPropList: FightProperty.getPropertiesPair(),
           lifeState: 1,
           animatorParaList: [{}],
           entityClientData: {},
@@ -137,7 +89,7 @@ export default async function handle(session: Session, packet: DataPacket) {
               '7132': 3,
             },
             wearingFlycloakId: 140001,
-            bornTime: Date.now(),
+            bornTime: Date.now()/1000,
           },
         },
       ],

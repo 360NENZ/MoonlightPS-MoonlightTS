@@ -7,6 +7,7 @@ import { PacketHead, ServerDisconnectClientNotify } from '../data/proto/game';
 import defaultHandler from './packets/recv/PacketHandler';
 import {Player} from '../game/Player';
 import {World} from '../game/World';
+import { AvatarManager } from '../game/managers/AvatarManager';
 const c = new Logger('Session', 'yellow');
 
 type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
@@ -18,6 +19,7 @@ export class Session {
   private world: World;
   public uid: number = 0;
   public sceneToken: number = 0;
+  private avatarManager: AvatarManager;
   c: Logger;
 
   constructor(connection: KcpConnection) {
@@ -25,6 +27,7 @@ export class Session {
     this.c = c;
     this.player = new Player(this)
     this.world = new World(this);
+    this.avatarManager = new AvatarManager(this)
   }
 
   async send<Class extends MessageType<any>>(
@@ -95,6 +98,10 @@ export class Session {
   
   getWorld(){
     return this.world;
+  }
+  
+  getAvatarManager(){
+    return this.avatarManager;
   }
   
   kick(){
