@@ -68,7 +68,7 @@ export class World {
     this.entities[entity.getId()] === undefined;
   }
 
-  public addEntity(entity: Entity, visionType = VisionType.VISION_TYPE_DIE) {
+  public addEntity(entity: Entity, visionType = VisionType.VISION_TYPE_BORN) {
     this.session.send(
       SceneEntityAppearNotify,
       SceneEntityAppearNotify.fromPartial({

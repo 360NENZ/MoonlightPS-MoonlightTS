@@ -29,10 +29,10 @@ export class ExcelManager {
   public static avatars: { [key: number]: AvatarInfo } = [];
   public static avatarCards: number[] = [];
   public static depots: AvatarDepot[] = [];
+  public static gadgets: {[key: number]: string} = []
 
   private static idTranslate: { [key: number]: string } = [];
 
-  public static GadgetExcelConfigData: {};
   public static MonsterExcelConfigData: {};
   public static WeaponExcelConfigData: {};
 
@@ -43,8 +43,8 @@ export class ExcelManager {
     this.initShopExcelConfigData();
     this.initEmbryos();
     this.initAvatarExcel();
+    this.initGadgets();
 
-    this.GadgetExcelConfigData = this.loadResourceFile('GadgetExcelConfigData');
     this.MonsterExcelConfigData = this.loadResourceFile(
       'MonsterExcelConfigData'
     );
@@ -256,6 +256,10 @@ export class ExcelManager {
     return this.embryos[this.idTranslate[id]];
   }
 
+  public static getGadgetByName(id: number): string{
+    return this.gadgets[id];
+  }
+
   private static initChatEmojiExcel() {
     const _emojis: [{ id: number }] = this.loadResourceFile(
       'EmojiDataExcelConfigData'
@@ -287,6 +291,15 @@ export class ExcelManager {
       }
     } catch {
       c.error(`Error, could not load ${file}.json`, false);
+    }
+  }
+
+  private static initGadgets(){
+    const gadgets: [] =
+      this.loadResourceFile('GadgetExcelConfigData');
+
+    for(let gadget of gadgets){
+      this.gadgets[gadget['id']] = gadget['jsonName']
     }
   }
 
