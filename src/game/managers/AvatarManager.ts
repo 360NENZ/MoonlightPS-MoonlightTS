@@ -1,7 +1,10 @@
 import {
   AvatarInfo,
   AvatarTeam,
+  AvatarTeamUpdateNotify,
   MotionState,
+  SceneTeamAvatar,
+  SceneTeamUpdateNotify,
   Vector,
   VisionType,
 } from '../../data/proto/game';
@@ -49,17 +52,48 @@ export class AvatarManager {
     const avatarList: AvatarInfo[] = [];
     this.avatars.forEach((e) => {
       avatarList.push(e.avatarInfo);
+      console.debug(e.avatarInfo.avatarId, e.avatarInfo.propMap);
     });
-    console.debug(avatarList)
     return avatarList;
   }
 
+  setTeam(index: number, avatars: number[], requestTeamChange = true) {
+    this.teams[index] = avatars;
+    if (requestTeamChange) {
+      this.updateTeam();
+    }
+  }
+
+  updateTeam() {
+    const curTeam = this.getTeam(this.curTeamIndex);
+
+    const teamList: SceneTeamAvatar[] = [];
+
+    curTeam.forEach((e) => {
+      teamList.push(this.getAvatarByGuid(e)!.getSceneTeamAvatar());
+    });
+
+    const sceneTeamUpdate: SceneTeamUpdateNotify =
+      SceneTeamUpdateNotify.fromPartial({
+        sceneTeamAvatarList: teamList,
+      });
+
+    this.session.send(
+      AvatarTeamUpdateNotify,
+      AvatarTeamUpdateNotify.fromPartial({
+        avatarTeamMap: this.getTeamMap(),
+      })
+    );
+
+    this.session.send(SceneTeamUpdateNotify, sceneTeamUpdate);
+  }
+
   getTeamMap() {
-    const teamMap: {[key: number]: AvatarTeam} = [];
+    const teamMap: { [key: number]: AvatarTeam } = [];
     for (let i = 1; i < 5; i++) {
       teamMap[i] = AvatarTeam.fromPartial({
         avatarGuidList: this.getTeam(i),
-        teamName: "MoonlightTS!"
+        teamName: 'MoonlightTS!',
       });
     }
     return teamMap;

@@ -6,6 +6,8 @@ import ProtoFactory from '../../../utils/ProtoFactory';
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as PlayerSetPauseReq;
 
+  session.isPaused = body.isPaused;
+
   session.send(
     PlayerSetPauseRsp,
     PlayerSetPauseRsp.fromPartial({

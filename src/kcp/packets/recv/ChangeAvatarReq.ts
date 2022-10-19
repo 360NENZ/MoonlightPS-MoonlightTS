@@ -1,29 +1,35 @@
-import { ChangeAvatarReq, ChangeAvatarRsp, SceneEntityAppearNotify, SceneEntityDisappearNotify, VisionType } from '../../../data/proto/game';
+import {
+  ChangeAvatarReq,
+  ChangeAvatarRsp,
+  SceneEntityAppearNotify,
+  SceneEntityDisappearNotify,
+  VisionType,
+} from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 
-let guid = 296352743474
-
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as ChangeAvatarReq;
 
-  session.send(SceneEntityDisappearNotify,SceneEntityDisappearNotify.fromPartial({
-      disappearType: VisionType.VISION_TYPE_REPLACE,
-      entityList: [guid]
-  }))
+  const avatarManager = session.getAvatarManager();
+  const world = session.getWorld();
 
-  guid = body.guid
-  
-  
-  session.send(SceneEntityAppearNotify,SceneEntityAppearNotify.fromPartial({
-    
-  }))
+  world.killEntity(
+    avatarManager.getAvatarByGuid(avatarManager.curAvatarGuid)!,
+    VisionType.VISION_TYPE_REPLACE
+  );
+
+  world.addEntity(
+    avatarManager.getAvatarByGuid(body.guid)!,
+    VisionType.VISION_TYPE_REPLACE
+  );
 
   session.send(
     ChangeAvatarRsp,
     ChangeAvatarRsp.fromPartial({
       curGuid: body.guid,
+      skillId: body.skillId,
     })
   );
 }

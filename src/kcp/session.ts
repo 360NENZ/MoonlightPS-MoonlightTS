@@ -20,6 +20,7 @@ export class Session {
   public uid: number = 0;
   public sceneToken: number = 0;
   private avatarManager: AvatarManager;
+  public isPaused: boolean = false;
   c: Logger;
 
   constructor(connection: KcpConnection) {

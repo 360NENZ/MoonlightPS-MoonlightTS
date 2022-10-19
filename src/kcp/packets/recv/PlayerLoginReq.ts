@@ -130,24 +130,22 @@ export default async function handle(session: Session, packet: DataPacket) {
     );
   });
 
-  const avatarData = AvatarDataNotify.fromPartial({
-    ownedCostumeList: [
-      201601, 204101, 204501, 202101, 204201, 201401, 200302, 203101, 202701,
-      200301,
-    ],
-    chooseAvatarGuid: session.getAvatarManager().curAvatarGuid,
-    avatarTeamMap: session.getAvatarManager().getTeamMap(),
-    ownedFlycloakList: [
-      140002, 140003, 140001, 140006, 140007, 140004, 140005, 140010, 140008,
-      140009,
-    ],
-    avatarList: session.getAvatarManager().getAvatarInfoList(),
-    curAvatarTeamId: session.getAvatarManager().curTeamIndex,
-  })
-
   session.send(
     AvatarDataNotify,
-    avatarData
+    AvatarDataNotify.fromPartial({
+      ownedCostumeList: [
+        201601, 204101, 204501, 202101, 204201, 201401, 200302, 203101, 202701,
+        200301,
+      ],
+      chooseAvatarGuid: session.getAvatarManager().curAvatarGuid,
+      avatarTeamMap: session.getAvatarManager().getTeamMap(),
+      ownedFlycloakList: [
+        140002, 140003, 140001, 140006, 140007, 140004, 140005, 140010, 140008,
+        140009,
+      ],
+      avatarList: session.getAvatarManager().getAvatarInfoList(),
+      curAvatarTeamId: session.getAvatarManager().curTeamIndex,
+    })
   );
 
   const sceneTags: number[] = [];
