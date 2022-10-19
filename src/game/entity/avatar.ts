@@ -166,17 +166,6 @@ export class AvatarDepot {
 
   getDefaultProudSkillsMap() {
     const map: { [key: number]: number } = [];
-    // this.inherentProudSkillOpens.forEach((e) => {
-    //   map[e.proudSkillGroupId] = 3;
-    // });
-
-    // for(let skill of this.inherentProudSkillOpens){
-    //   if(InherentProudSkillOpen.proudSkillExtraMap[skill.proudSkillGroupId] === undefined){
-    //     continue
-    //   }else{
-    //     map[InherentProudSkillOpen.proudSkillExtraMap[skill.proudSkillGroupId]] = 3
-    //   }
-    // }
 
     this.skillMap.forEach((e) => {
       map[InherentProudSkillOpen.proudSkillExtraMap[e]] = 3;

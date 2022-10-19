@@ -96,8 +96,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     session.c.warn('UID windy file not found...')
   }
 
-  
-
   let items: any[] = [];
 
   ExcelManager.materials.forEach((element) => {
@@ -154,22 +152,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     sceneTags.push(i);
   }
 
-  session.send(
-    PlayerEnterSceneNotify,
-    PlayerEnterSceneNotify.fromPartial({
-      sceneId: 3,
-      type: EnterType.ENTER_TYPE_SELF,
-      sceneBeginTime: Date.now(),
-      worldLevel: 8,
-      worldType: 1,
-      targetUid: session.uid,
-      isFirstLoginEnterScene: true,
-      sceneTransaction: "3-" + session.uid + "-" + Date.now()/1000 + "-" + session.sceneToken,
-      enterReason: 1,
-      pos: GameConstants.START_POSITION,
-      enterSceneToken: session.sceneToken,
-    })
-  );
+  session.getPlayer().teleport(3,GameConstants.START_POSITION,EnterType.ENTER_TYPE_SELF,1)
 
    session.send(
     ActivityScheduleInfoNotify,

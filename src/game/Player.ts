@@ -1,5 +1,6 @@
-import { PropValue, Vector } from "../data/proto/game";
+import { EnterType, PlayerEnterSceneNotify, PropValue, Vector } from "../data/proto/game";
 import { Session } from "../kcp/session";
+import { getRandomInt } from "../utils/Utils";
 import { GameConstants } from "./Constants";
 import { DataProperties } from "./managers/constants/DataProperties";
 
@@ -21,7 +22,7 @@ export class Player {
         this.playerProp[DataProperties.PROP_CUR_SPRING_VOLUME] = 8000000
         this.playerProp[DataProperties.PROP_SPRING_AUTO_USE_PERCENT] = 0.5
         this.playerProp[DataProperties.PROP_MAX_STAMINA] = 24000
-        this.playerProp[DataProperties.PROP_CUR_PERSIST_STAMINA] = 24000
+    this.playerProp[DataProperties.PROP_CUR_PERSIST_STAMINA] = 24000
         this.playerProp[DataProperties.PROP_IS_FLYABLE] = 1
         this.playerProp[DataProperties.PROP_IS_TRANSFERABLE] = 1
         this.playerProp[DataProperties.PROP_IS_MP_MODE_AVAILABLE] = 1
@@ -42,6 +43,44 @@ export class Player {
             })
         }
         return propMap;
+    }
+
+    public teleport(
+        sceneId: number,
+        position: Vector,
+        type = EnterType.ENTER_TYPE_SELF,
+        enterReason = 3
+    ): void
+    {
+        const sceneIds: number[] = []
+        for(let i=0;i<3000;i++){
+            sceneIds.push(i)
+        }
+
+        const teleport = PlayerEnterSceneNotify.fromPartial({
+            sceneId: sceneId,
+            pos: position,
+            sceneBeginTime: Date.now(),
+            type: type,
+            enterReason: enterReason,
+            targetUid: this.session.uid,
+            enterSceneToken: getRandomInt(1000,9999),
+            worldType: 1,
+            worldLevel: 8,
+            sceneTransaction: "3-" + this.session.uid + "-" + Date.now()/1000 + "-67458",
+        })
+
+        if(enterReason === 1){
+            teleport.isFirstLoginEnterScene = true;
+        }else{
+            this.position = position
+            teleport.prevSceneId = this.session.getWorld().getSceneId()
+            this.session.getWorld().setSceneId(sceneId)
+        }
+
+        teleport.sceneTagIdList = sceneIds
+
+        this.session.send(PlayerEnterSceneNotify,teleport)
     }
 
 
