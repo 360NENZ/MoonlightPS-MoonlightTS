@@ -30,6 +30,8 @@ export class ExcelManager {
   public static avatarCards: number[] = [];
   public static depots: AvatarDepot[] = [];
 
+  private static idTranslate: { [key: number]: string } = [];
+
   public static GadgetExcelConfigData: {};
   public static MonsterExcelConfigData: {};
   public static WeaponExcelConfigData: {};
@@ -73,18 +75,6 @@ export class ExcelManager {
         let embryoId = 0;
 
         const abilities: AbilityEmbryo[] = [];
-        //@ts-ignore
-        binData['abilities'].forEach((element) => {
-          abilities.push(
-            AbilityEmbryo.fromPartial({
-              abilityId: ++embryoId,
-              abilityNameHash: abilityHash(element['abilityName']),
-              abilityOverrideNameHash: abilityHash(
-                GameConstants.DEFAULT_ABILITY_NAME
-              ),
-            })
-          );
-        });
 
         GameConstants.DEFAULT_ABILITY_STRINGS.forEach((element) => {
           abilities.push(
@@ -98,6 +88,18 @@ export class ExcelManager {
           );
         });
 
+        //@ts-ignore
+        binData['abilities'].forEach((element) => {
+          abilities.push(
+            AbilityEmbryo.fromPartial({
+              abilityId: ++embryoId,
+              abilityNameHash: abilityHash(element['abilityName']),
+              abilityOverrideNameHash: abilityHash(
+                GameConstants.DEFAULT_ABILITY_NAME
+              ),
+            })
+          );
+        });
         this.embryos[file.split('_')[1].replace('.json', '')] = abilities;
       }
     }
@@ -108,20 +110,20 @@ export class ExcelManager {
     const skillDepot: [] = this.loadResourceFile(
       'AvatarSkillDepotExcelConfigData'
     );
-    
+
     const avatarSkillExcelConfigData: [] = this.loadResourceFile(
       'AvatarSkillExcelConfigData'
     );
 
-    for(let skill of avatarSkillExcelConfigData){
-      if(skill['proudSkillGroupId'] === undefined){
-
-        continue
-      }else{
-        InherentProudSkillOpen.proudSkillExtraMap[skill['id']] = skill['proudSkillGroupId']
+    for (let skill of avatarSkillExcelConfigData) {
+      if (skill['proudSkillGroupId'] === undefined) {
+        continue;
+      } else {
+        InherentProudSkillOpen.proudSkillExtraMap[skill['id']] =
+          skill['proudSkillGroupId'];
       }
     }
-    
+
     // console.table(InherentProudSkillOpen.proudSkillExtraMap)
 
     for (let depot of skillDepot) {
@@ -245,7 +247,13 @@ export class ExcelManager {
         coreProudSkillLevel: 6,
       });
       this.avatars[avatarConfig['id']] = avatar;
+      //@ts-ignore
+      this.idTranslate[avatarConfig['id']] = avatarConfig['iconName'].split('UI_AvatarIcon_')[1];
     }
+  }
+
+  public static getEmbryoFromId(id: number): AbilityEmbryo[] {
+    return this.embryos[this.idTranslate[id]];
   }
 
   private static initChatEmojiExcel() {
