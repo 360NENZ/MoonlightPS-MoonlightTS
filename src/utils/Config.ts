@@ -41,7 +41,6 @@ type DefaultConfig = typeof DEFAULT_CONFIG;
 
 function r(...args: string[]) {
     return readFileSync(resolve(__dirname, ...args)).toString();
-    console.log(resolve(__dirname, ...args))
 }
 
 function rd(...args: string[]) {

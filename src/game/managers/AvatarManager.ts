@@ -52,7 +52,6 @@ export class AvatarManager {
     const avatarList: AvatarInfo[] = [];
     this.avatars.forEach((e) => {
       avatarList.push(e.avatarInfo);
-      console.debug(e.avatarInfo.avatarId, e.avatarInfo.propMap);
     });
     return avatarList;
   }
