@@ -10,7 +10,6 @@ import {
 } from '../../data/proto/game';
 import { Session } from '../../kcp/session';
 import { Avatar } from '../entity/avatar';
-import { EntityProperty } from './constants/EntityProperties';
 import { ExcelManager } from './ExcelManager';
 
 export class AvatarManager {

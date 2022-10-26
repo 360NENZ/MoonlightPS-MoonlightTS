@@ -1,5 +1,4 @@
 import { ActivityScheduleInfoNotify } from '../data/proto/game';
-import { ActivityLoader } from '../game/managers/ConfigLoaders/ActivityLoader';
 import { ConfigManager } from '../game/managers/ConfigManager';
 import Logger from '../utils/Logger';
 import Interface, { Command } from './Interface';

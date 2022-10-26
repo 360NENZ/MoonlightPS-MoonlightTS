@@ -11,11 +11,11 @@ const DEFAULT_CONFIG = {
     // MongoDB
     MONGO_URI: "mongodb://0.0.0.0:27017/MoonlightTS",
     
-
     // HTTP
     HTTP: {
         HTTP_HOST: "0.0.0.0",
-        HTTP_PORT: 443
+        HTTP_PORT: 443,
+        API_KEY: ""
     },
 
     // Dispatch
@@ -85,7 +85,8 @@ export default class Config {
     public static MONGO_URI: string = Config.config.MONGO_URI;
     public static HTTP: {
         HTTP_HOST: string,
-        HTTP_PORT: number
+        HTTP_PORT: number,
+        API_KEY: string
     } = Config.config.HTTP;
     public static DISPATCH: {
         DISPATCH_NAME: string;

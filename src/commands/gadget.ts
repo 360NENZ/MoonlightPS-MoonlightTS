@@ -1,10 +1,9 @@
-import { ActivityScheduleInfoNotify, Vector } from '../data/proto/game';
+import { Vector } from '../data/proto/game';
 import { Gadget } from '../game/entity/gadget';
-import { ConfigManager } from '../game/managers/ConfigManager';
 import { ExcelManager } from '../game/managers/ExcelManager';
 import Logger from '../utils/Logger';
 import Interface, { Command } from './Interface';
-const c = new Logger('/exit', 'blue');
+const c = new Logger('/gadget', 'blue');
 
 export default async function handle(command: Command, executor: boolean) {
   if (command.args.length != 1) {
