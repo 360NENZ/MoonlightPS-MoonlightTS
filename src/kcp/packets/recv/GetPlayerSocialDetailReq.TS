@@ -24,7 +24,7 @@ export default async function handle(session: Session, packet: DataPacket) {
         onlineState: FriendOnlineState.FRIEND_ONLINE_STATE_ONLINE,
         isFriend: true,
         isMpModeAvailable: true,
-        nameCardId: 210132,
+        nameCardId: 210044,
         finishAchievementNum: 1000,
         signature: '<color=#2ba1f0>MoonlightTS on TOP!</color>',
         profilePicture: ProfilePicture.fromPartial({
@@ -33,6 +33,4 @@ export default async function handle(session: Session, packet: DataPacket) {
       }),
     })
   );
-
-  session.send
 }
