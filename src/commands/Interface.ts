@@ -72,9 +72,9 @@ export default class Interface {
 
   private static generateChatData(text: string) {
     const msg: ChatInfo = ChatInfo.fromPartial({
-      time: Date.now(),
-      sequence: ++this.seq,
-      toUid: 1,
+      Unk3250HENLDIJMIOE: Date.now(),
+      Unk3250IDEEPEOPCIL: ++this.seq,
+      Unk3250PHBEHIGHOCD: 1,
       uid: 99,
       isRead: false,
       text: text,

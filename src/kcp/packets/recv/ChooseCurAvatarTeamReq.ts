@@ -18,7 +18,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     ChooseCurAvatarTeamRsp,
     ChooseCurAvatarTeamRsp.fromPartial({
       curTeamId: body.teamId,
-
     })
   );
 }

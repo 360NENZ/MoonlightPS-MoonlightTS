@@ -1,5 +1,4 @@
 import {
-  SceneEntityAppearNotify,
   EnterSceneDoneRsp,
   EnterSceneDoneReq,
   WorldPlayerLocationNotify,
@@ -14,8 +13,6 @@ import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import { GameConstants } from '../../../game/Constants';
-import { FightProperty } from '../../../game/managers/constants/FightProperties';
-
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as EnterSceneDoneReq;
 

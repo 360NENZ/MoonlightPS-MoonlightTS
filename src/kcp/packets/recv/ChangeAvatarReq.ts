@@ -29,7 +29,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     ChangeAvatarRsp,
     ChangeAvatarRsp.fromPartial({
       curGuid: body.guid,
-      skillId: body.skillId,
+      Unk3150JAKPANLHCEF: body.Unk3150JAKPANLHCEF,
     })
   );
 }

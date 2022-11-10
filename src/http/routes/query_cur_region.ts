@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Config from '../../utils/Config';
-import { QueryCurrRegionHttpRsp, RegionInfo, Retcode, StopServerInfo } from '../../data/proto/game';
+import { QueryCurrRegionHttpRsp, RegionInfo, StopServerInfo } from '../../data/proto/game';
 import { Ec2bKey,encryptAndSign } from '../../crypto';
 import Logger from '../../utils/Logger';
 import { API } from '../../utils/Utils';
@@ -12,7 +12,7 @@ const ec2b = new Ec2bKey();
 export default async function handle(req: Request, res: Response) {
   if (Config.GAMESERVER.MAINTENANCE) {
     const maintenance = QueryCurrRegionHttpRsp.fromPartial({
-      retcode: Retcode.RETCODE_RET_STOP_SERVER,
+      retcode: 11,
       msg: "MoonlightTS",
       regionInfo: RegionInfo.fromPartial({}),
       stopServer: StopServerInfo.fromPartial({
@@ -27,7 +27,7 @@ export default async function handle(req: Request, res: Response) {
   }
 
   const data = await API.verify()
-  if(data.retcode == Retcode.RETCODE_RET_STOP_SERVER){
+  if(data.retcode == 11){
     c.error(`Invalid API Key!, ${data.message}`,false)
     const rsp = QueryCurrRegionHttpRsp.fromPartial({
       retcode: data.retcode,
