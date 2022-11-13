@@ -28,7 +28,7 @@ export default class Interface {
 
   static handleMessage(str: string) {
     if (!this.isExecutor) {
-      Interface.sendMessage(str);
+      // Interface.sendMessage(str);
     } else {
       c.log(str);
     }

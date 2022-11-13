@@ -38,10 +38,10 @@ export class Avatar extends Entity {
     this.weaponInfo = SceneWeaponInfo.fromPartial({
       entityId: world.getNextEntityId(ProtEntityType.PROT_ENTITY_TYPE_WEAPON),
       guid: world.getNextGuid(),
-      itemId: 13509,
+      itemId: 14512,
       level: 90,
       promoteLevel: 6,
-      gadgetId: 50011406,
+      gadgetId: 50014512,
       abilityInfo: AbilitySyncStateInfo.fromPartial({}),
     });
     this.world = world;
@@ -63,8 +63,9 @@ export class Avatar extends Entity {
       entityId: this.id,
       weaponGuid: 2785642601942876162,
       weaponEntityId: 100664575,
-      isPlayerCurAvatar: isPlayerCurAvatar,
-      sceneEntityInfo: this.getSceneEntityInfo(),
+      Unk3250GENGJLPJCCN: isPlayerCurAvatar,
+      Unk3250ILECHHKDIEM: isPlayerCurAvatar,
+      Unk3250AGAOINKGMMM: this.getSceneEntityInfo(),
       abilityControlBlock: AbilityControlBlock.fromPartial({
         abilityEmbryoList: this.embryos,
       }),

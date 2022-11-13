@@ -6,13 +6,15 @@ import * as crypto from '../../../crypto';
 import Account from '../../../db/Account';
 
 export default async function handle(session: Session, packet: DataPacket) {
-  const body = ProtoFactory.getBody(packet) as GetPlayerTokenReq;
 
-  const account = await Account.fromToken(body.accountToken);
+  const body = ProtoFactory.getBody(packet) as GetPlayerTokenReq;
+  session.c.debug(GetPlayerTokenReq.toJSON(body))
+
+  const account = await Account.fromToken(body.Unk3250KFPHNEHCGCP);
 
   const seed = 0x0n; //create a random seed
 
-  const encrypted_client_seed = Buffer.from(body.clientSeed, 'base64'); //Get encrypted seed from client
+  const encrypted_client_seed = Buffer.from(body.Unk3250MGLKBFOCHAJ, 'base64'); //Get encrypted seed from client
   const decrypted_client_seed = crypto.rsaDecrypt(
     crypto.signingKey,
     encrypted_client_seed
@@ -31,17 +33,17 @@ export default async function handle(session: Session, packet: DataPacket) {
   const dataObj: GetPlayerTokenRsp = GetPlayerTokenRsp.fromPartial({
     retcode: 0,
     uid: account?.uid,
-    token: body.accountToken,
-    accountType: body.accountType,
+    token: account?.token,
+    Unk3250DILMOPPLPEM: body.Unk3250DILMOPPLPEM,
     accountUid: body.accountUid,
     channelId: body.channelId,
-    encryptedSeed: encryptedSeed,
-    seedSignature: seedSignature,
+    Unk3250BBOCPCOJNKF: encryptedSeed,
+    Unk3250HBNIIDFKHGN: seedSignature,
   });
 
   session.send(GetPlayerTokenRsp, dataObj);
 
-  session.uid = account!.uid;
+  session.uid = account!.uid
 
   session.connection.encryptor.seed(seed);
 }

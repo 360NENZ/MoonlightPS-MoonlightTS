@@ -164,13 +164,13 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     PlayerEnterSceneInfoNotify,
     PlayerEnterSceneInfoNotify.fromPartial({
-      teamEnterInfo: TeamEnterSceneInfo.fromPartial({
+      Unk3250LDKPDOEPNNO: TeamEnterSceneInfo.fromPartial({
         teamEntityId: session
           .getWorld()
           .getNextEntityId(ProtEntityType.PROT_ENTITY_TYPE_TEAM),
       }),
       enterSceneToken: body.enterSceneToken,
-      avatarEnterInfo: [
+      Unk3250AKLKDMMOIHC: [
         session
           .getAvatarManager()
           .getAvatarByGuid(session.getAvatarManager().curAvatarGuid)!
@@ -179,7 +179,7 @@ export default async function handle(session: Session, packet: DataPacket) {
       curAvatarEntityId: session
         .getWorld()
         .getNextEntityId(ProtEntityType.PROT_ENTITY_TYPE_AVATAR),
-      mpLevelEntityInfo: MPLevelEntityInfo.fromPartial({
+        Unk3250EDLDAGACBBE: MPLevelEntityInfo.fromPartial({
         authorityPeerId: 1,
         entityId: session.getWorld().mpLevelentityId,
       }),
@@ -190,7 +190,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     PlayerGameTimeNotify,
     PlayerGameTimeNotify.fromPartial({
       uid: account?.uid,
-      gameTime: 8 * 60,
+      Unk3250ENBHCFJJEHH: 8 * 60,
     })
   );
 
