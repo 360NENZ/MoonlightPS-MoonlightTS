@@ -12,6 +12,8 @@ export class GameConstants {
 
   public static SERVER_CONSOLE_UID = 99;
 
+  public static DEFAULT_NAMECARD = 210146;
+
   public static DEFAULT_ABILITY_STRINGS = [
     'Avatar_DefaultAbility_VisionReplaceDieInvincible',
     'Avatar_DefaultAbility_AvartarInShaderChange',

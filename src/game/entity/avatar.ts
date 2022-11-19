@@ -23,7 +23,7 @@ import {
 import { FightProperty } from '../managers/constants/FightProperties';
 import { ExcelManager } from '../managers/ExcelManager';
 import { World } from '../World';
-import { Entity } from './entity';
+import { Entity, EntityCategory } from './entity';
 
 export class Avatar extends Entity {
   public weaponInfo: SceneWeaponInfo;
@@ -34,7 +34,7 @@ export class Avatar extends Entity {
   public world: World;
 
   constructor(world: World, avatarInfo: AvatarInfo, motion: Vector) {
-    super(world, motion, ProtEntityType.PROT_ENTITY_TYPE_AVATAR);
+    super(world, motion, ProtEntityType.PROT_ENTITY_TYPE_AVATAR,EntityCategory.Avatar);
     this.weaponInfo = SceneWeaponInfo.fromPartial({
       entityId: world.getNextEntityId(ProtEntityType.PROT_ENTITY_TYPE_WEAPON),
       guid: world.getNextGuid(),

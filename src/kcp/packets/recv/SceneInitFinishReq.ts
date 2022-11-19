@@ -26,6 +26,7 @@ import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import Account from '../../../db/Account';
+import { GameConstants } from '../../../game/Constants';
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as SceneInitFinishReq;
@@ -75,7 +76,7 @@ export default async function handle(session: Session, packet: DataPacket) {
           playerLevel: 1,
           mpSettingType: 'MP_SETTING_TYPE_ENTER_AFTER_APPLY',
           curPlayerNumInWorld: 1,
-          nameCardId: 210069,
+          nameCardId: GameConstants.DEFAULT_NAMECARD,
           profilePicture: {
             avatarId: 10000007,
           },
@@ -130,9 +131,10 @@ export default async function handle(session: Session, packet: DataPacket) {
           onlinePlayerInfo: {
             uid: account?.uid,
             nickname: account?.name,
-            playerLevel: 1,
+            playerLevel: 100,
+            nameCardId: GameConstants.DEFAULT_NAMECARD,
             profilePicture: {
-              avatarId: 10000007,
+              avatarId: 10000070,
             },
           },
         },
