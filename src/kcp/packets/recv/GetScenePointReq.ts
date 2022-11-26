@@ -15,7 +15,7 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     GetScenePointRsp,
     GetScenePointRsp.fromPartial({
-      Unk3250GEDEFAIHKMH: scenePoints,
+      unlockedPointList: scenePoints,
       Unk3250FKANNCGJEFJ: [1, 2, 3, 4, 5, 6, 7, 8],
       sceneId: body.sceneId,
     })

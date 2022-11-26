@@ -10,11 +10,11 @@ export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as GetPlayerTokenReq;
   session.c.debug(GetPlayerTokenReq.toJSON(body))
 
-  const account = await Account.fromToken(body.Unk3250KFPHNEHCGCP);
+  const account = await Account.fromToken(body.accountToken);
 
   const seed = 0x0n; //create a random seed
 
-  const encrypted_client_seed = Buffer.from(body.Unk3250MGLKBFOCHAJ, 'base64'); //Get encrypted seed from client
+  const encrypted_client_seed = Buffer.from(body.clientRandKey, 'base64'); //Get encrypted seed from client
   const decrypted_client_seed = crypto.rsaDecrypt(
     crypto.signingKey,
     encrypted_client_seed

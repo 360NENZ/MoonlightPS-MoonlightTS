@@ -7,7 +7,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     const body = ProtoFactory.getBody(packet) as ChangeGameTimeReq;
 
     session.send(ChangeGameTimeRsp, ChangeGameTimeRsp.fromPartial({
-        curGameTime: body.Unk3250ENBHCFJJEHH,
+        curGameTime: body.gameTime,
         extraDays: body.extraDays
     }));
 }
