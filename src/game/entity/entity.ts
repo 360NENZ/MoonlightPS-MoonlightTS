@@ -17,20 +17,23 @@ export class Entity {
   public motion: Vector;
   public rotation: Vector;
   public speed: Vector;
+  public category: EntityCategory;
 
-  public state: number;
+  public state: MotionState;
 
   public constructor(
     world: World,
     motion: Vector,
     entityType: ProtEntityType = ProtEntityType.PROT_ENTITY_TYPE_MONSTER,
+    category: EntityCategory = EntityCategory.None,
     rotation: Vector = Vector.fromPartial({ x: 0, y: 0, z: 0 }),
-    speed: Vector = Vector.fromPartial({ x: 0, y: 0, z: 0 })
+    speed: Vector = Vector.fromPartial({ x: 0, y: 0, z: 0 }),
   ) {
     this.world = world;
     this.motion = motion;
     this.rotation = rotation;
     this.speed = speed;
+    this.category = category;
     this.state = MotionState.MOTION_STATE_STANDBY;
     this.guid = world.getNextGuid();
     this.id = world.getNextEntityId(entityType);
@@ -58,4 +61,11 @@ export class Entity {
   getGuid(){
     return this.guid
   }
+}
+
+export enum EntityCategory {
+  None = 0,
+  Avatar = 1,
+  Gadget = 2,
+  Monster = 3,
 }

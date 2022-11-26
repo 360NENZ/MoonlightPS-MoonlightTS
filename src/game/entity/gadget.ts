@@ -13,12 +13,12 @@ import {
 } from '../../data/proto/game';
 import { EntityProperties } from '../managers/constants/EntityProperties';
 import { World } from '../World';
-import { Entity } from './entity';
+import { Entity, EntityCategory } from './entity';
 
 export class Gadget extends Entity {
   public gadgetId: number;
   constructor(gadgetId: number, world: World, motion: Vector) {
-    super(world, motion, ProtEntityType.PROT_ENTITY_TYPE_GADGET);
+    super(world, motion, ProtEntityType.PROT_ENTITY_TYPE_GADGET,EntityCategory.Gadget);
     (this.id = world.getNextEntityId(ProtEntityType.PROT_ENTITY_TYPE_GADGET)),
       (this.gadgetId = gadgetId),
       (this.guid = world.getNextGuid());
