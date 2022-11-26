@@ -13,6 +13,7 @@ import { GameConstants } from '../Constants';
 import { AvatarDepot, InherentProudSkillOpen } from '../entity/avatar';
 import { EntityProperty } from './constants/EntityProperties';
 import { FightProperty } from './constants/FightProperties';
+import { MonsterData } from './Types/MonsterData';
 
 function r(...args: string[]) {
   return readFileSync(resolve(__dirname, ...args)).toString();
@@ -29,11 +30,11 @@ export class ExcelManager {
   public static avatars: { [key: number]: AvatarInfo } = [];
   public static avatarCards: number[] = [];
   public static depots: AvatarDepot[] = [];
-  public static gadgets: {[key: number]: string} = []
+  public static gadgets: { [key: number]: string } = []
+  public static monsters: { [key: number]: MonsterData } = []
 
   private static idTranslate: { [key: number]: string } = [];
 
-  public static MonsterExcelConfigData: {};
   public static WeaponExcelConfigData: {};
 
   static init() {
@@ -44,10 +45,8 @@ export class ExcelManager {
     this.initEmbryos();
     this.initAvatarExcel();
     this.initGadgets();
-
-    this.MonsterExcelConfigData = this.loadResourceFile(
-      'MonsterExcelConfigData'
-    );
+    this.initMonsterExcel();
+    
     this.WeaponExcelConfigData = this.loadResourceFile('WeaponExcelConfigData');
   }
 
@@ -256,7 +255,7 @@ export class ExcelManager {
     return this.embryos[this.idTranslate[id]];
   }
 
-  public static getGadgetByName(id: number): string{
+  public static getGadgetByName(id: number): string {
     return this.gadgets[id];
   }
 
@@ -267,6 +266,13 @@ export class ExcelManager {
     _emojis.forEach((element) => {
       this.emojis.push(element.id);
     });
+  }
+
+  private static initMonsterExcel() {
+    const _monster = this.loadResourceFile('MonsterExcelConfigData')
+    for (let monster of _monster) {
+      this.monsters[monster["id"]] = new MonsterData(monster['id'], monster['monsterName'], monster['equips'], monster['affix'])
+    }
   }
 
   private static loadResourceFile(
@@ -294,11 +300,11 @@ export class ExcelManager {
     }
   }
 
-  private static initGadgets(){
+  private static initGadgets() {
     const gadgets: [] =
       this.loadResourceFile('GadgetExcelConfigData');
 
-    for(let gadget of gadgets){
+    for (let gadget of gadgets) {
       this.gadgets[gadget['id']] = gadget['jsonName']
     }
   }
