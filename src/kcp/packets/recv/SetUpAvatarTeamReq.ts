@@ -28,11 +28,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     session.getAvatarManager().curAvatarGuid = body.curAvatarGuid;
     updatedAvatar.motion = player.position;
 
-    world.killEntity(
-      avatarManager.getAvatarByGuid(avatarManager.curAvatarGuid)!,
-      VisionType.VISION_TYPE_REPLACE
-    );
-  
+    world.killEntity(avatarManager.getAvatarByGuid(avatarManager.curAvatarGuid)!, VisionType.VISION_TYPE_REPLACE);
     world.addEntity(updatedAvatar, VisionType.VISION_TYPE_REPLACE);
   }
 
