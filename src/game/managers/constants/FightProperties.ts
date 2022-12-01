@@ -1,6 +1,6 @@
 import { FightPropPair } from "../../../data/proto/game";
 
-enum FightProperties {
+export enum FightProperties {
   FIGHT_PROP_NONE = 0,
   FIGHT_PROP_BASE_HP = 1,
   FIGHT_PROP_HP = 2,
