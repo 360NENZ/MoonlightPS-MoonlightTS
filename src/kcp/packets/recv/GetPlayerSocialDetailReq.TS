@@ -11,6 +11,8 @@ import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import Account from '../../../db/Account'
 import { GameConstants } from '../../../game/Constants';
+import { ExcelManager } from '../../../game/managers/ExcelManager';
+
 
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as GetPlayerSocialDetailReq;

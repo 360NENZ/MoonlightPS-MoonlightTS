@@ -1,9 +1,11 @@
-import { CombatInvocationsNotify, CombatTypeArgument, EntityMoveInfo, EvtBeingHitInfo, EvtBeingHitNotify, MotionState, Vector } from '../../../data/proto/game';
+import { CombatInvocationsNotify, CombatTypeArgument, EntityFightPropUpdateNotify, EntityMoveInfo, EvtBeingHitInfo, EvtBeingHitNotify, ForwardType, MotionState, Vector } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import { Entity, EntityCategory } from '../../../game/entity/entity';
 import { Avatar } from '../../../game/entity/avatar';
+import { FightProperties } from '../../../game/managers/constants/FightProperties';
+
 
 export default async function handle(session: Session, packet: DataPacket) {
     const body = ProtoFactory.getBody(packet) as CombatInvocationsNotify;
@@ -11,11 +13,14 @@ export default async function handle(session: Session, packet: DataPacket) {
     for (let invoke of body.invokeList) {
         switch (invoke.argumentType) {
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_EVT_BEING_HIT:
-                session.send(EvtBeingHitNotify, EvtBeingHitNotify.fromPartial({
-                    beingHitInfo: EvtBeingHitInfo.decode(invoke.combatData)
+                const BeingHitData = EvtBeingHitInfo.decode(Buffer.from(invoke.combatData));
+
+                session.send(EvtBeingHitNotify,EvtBeingHitNotify.fromPartial({
+                    forwardType: ForwardType.FORWARD_TYPE_LOCAL,
+                    beingHitInfo: BeingHitData
                 }))
-                session.c.log(JSON.stringify(EvtBeingHitInfo.toJSON(EvtBeingHitInfo.decode(invoke.combatData))))
-                break;
+
+				break;
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_ENTITY_MOVE:
                 const moveInfo: EntityMoveInfo = EntityMoveInfo.decode(invoke.combatData)
                 const entity: Entity = session.getWorld().getEntityById(moveInfo.entityId);
@@ -38,7 +43,12 @@ export default async function handle(session: Session, packet: DataPacket) {
                     
                     break;
                 }
-                entity.state = moveInfo.motionInfo!.state
+
+                // if (moveInfo.motionInfo !== null){
+                //     entity.state = moveInfo.motionInfo!.state
+                // }else{
+                //     entity.state = MotionState.MOTION_STATE_NONE
+                // }
 
                 let rotation = moveInfo.motionInfo?.rot
 

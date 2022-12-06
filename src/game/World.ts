@@ -79,7 +79,7 @@ export class World {
     this.entities[entity.getId()] = entity;
   }
 
-  public getEntityById(id: number) {
+  public getEntityById(id: number): Entity {
     return this.entities[id] ?? null;
   }
 

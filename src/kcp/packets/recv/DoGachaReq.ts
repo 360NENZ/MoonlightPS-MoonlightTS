@@ -3,7 +3,6 @@ import {
   DoGachaRsp,
   GachaItem,
   ItemParam,
-  Retcode,
 } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
@@ -16,21 +15,19 @@ export default async function handle(session: Session, packet: DataPacket) {
 
   const Random5star: GachaItem[] = [];
 
-  session.c.debug(body);
+  session.c.log(JSON.stringify(DoGachaReq.toJSON(body)));
 
   for (let i = 0; i < 10; i++) {
     Random5star.push(
       GachaItem.fromPartial({
-        isFlashCard: false,
-        isGachaItemNew: false,
-        gachaItem: ItemParam.fromPartial({
+        Unk3250BGIOJBJFMFL: false,
+        Unk3250JNOOHBNJFIE: false,
+        Unk3250MOIMPMILFKM: ItemParam.fromPartial({
           itemId:
-            ExcelManager.avatarCards[
-              getRandomInt(0, ExcelManager.avatarCards.length)
-            ],
+          1075,
           count: 1,
         }),
-        tokenItemList: [
+        Unk3250NMAHEOOJOFM: [
           ItemParam.fromPartial({
             itemId: 222,
             count: getRandomInt(1, 100),
@@ -49,14 +46,14 @@ export default async function handle(session: Session, packet: DataPacket) {
     DoGachaRsp.fromPartial({
       retcode: 0,
       gachaScheduleId: body.gachaScheduleId,
-      leftGachaTimes: 2147483647,
-      gachaTimes: body.gachaTimes,
+      Unk3250HCKNBNNEFBB: 2147483647,
+      Unk3250NNHBPPJPLID: body.Unk3250NNHBPPJPLID,
       gachaType: body.gachaType,
-      newGachaRandom: body.gachaRandom,
-      costItemNum: 1,
-      costItemId: 223,
-      tenCostItemNum: 10,
-      tenCostItemId: 223,
+      newGachaRandom: body.Unk3250NNHBPPJPLID,
+      Unk3250GLPMIEMBGGL: 1, //costitemnum
+      Unk3250DBFMKAMNPCL: 223, //costitemid
+      Unk3250BLLMPAJNCPI: 10, //tencostitemnum
+      Unk3250PLFMMOFNGAG: 223, //tencostitemid
       gachaItemList: Random5star,
     })
   );

@@ -8,7 +8,6 @@ export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as ChooseCurAvatarTeamReq;
 
   const avatarManager = session.getAvatarManager();
-  const world = session.getWorld();
   
   avatarManager.curTeamIndex = body.teamId;
   avatarManager.updateTeam()
@@ -18,7 +17,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     ChooseCurAvatarTeamRsp,
     ChooseCurAvatarTeamRsp.fromPartial({
       curTeamId: body.teamId,
-
     })
   );
 }

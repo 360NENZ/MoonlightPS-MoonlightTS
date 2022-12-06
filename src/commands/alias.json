@@ -4,5 +4,6 @@
     "acc": "account",
     "d": "debug",
     "?": "help",
-    "m": "maintenance"
+    "m": "maintenance",
+    "pos": "position"
 }

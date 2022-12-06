@@ -34,7 +34,6 @@ export class ActivityLoader extends DefaultLoader {
         ActivityInfo.fromPartial({
           scheduleId: data[i].scheduleId,
           activityId: data[i].activityId,
-          activityType: data[i].activityType,
           beginTime: Date.now() / 1000,
           endTime: (Date.now() * 2) / 1000,
         })

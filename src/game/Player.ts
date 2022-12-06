@@ -62,19 +62,19 @@ export class Player {
             pos: position,
             sceneBeginTime: Date.now(),
             type: type,
-            enterReason: enterReason,
+            Unk3250LLHABHMLNAH: enterReason,
             targetUid: this.session.uid,
             enterSceneToken: getRandomInt(1000,9999),
-            worldType: 1,
+            Unk3250OOLKIEKNKKN: 1,
             worldLevel: 8,
             sceneTransaction: "3-" + this.session.uid + "-" + Date.now()/1000 + "-67458",
         })
 
         if(enterReason === 1){
-            teleport.isFirstLoginEnterScene = true;
+            teleport.Unk3250LFFBNEBMAAG = true;
         }else{
             this.position = position
-            teleport.prevSceneId = this.session.getWorld().getSceneId()
+            teleport.Unk3250LIDGFMDDOOM = this.session.getWorld().getSceneId()
             this.session.getWorld().setSceneId(sceneId)
         }
 

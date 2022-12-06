@@ -1,7 +1,6 @@
 import {
   GetShopmallDataReq,
   GetShopmallDataRsp,
-  Retcode,
 } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
@@ -15,7 +14,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     GetShopmallDataRsp,
     GetShopmallDataRsp.fromPartial({
       shopTypeList: [102],
-      retcode: Retcode.RETCODE_RET_SHOP_NOT_OPEN
+      retcode: 706
     })
   );
 }

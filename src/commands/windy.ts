@@ -10,7 +10,7 @@ const c = new Logger('/windy', 'blue');
 
 export default async function handle(command: Command) {
   if (command.args.length == 0) {
-    c.log('Usage: /windy (script)');
+    Interface.handleMessage('Usage: /windy (script)');
     return;
   }
 
@@ -26,7 +26,7 @@ export default async function handle(command: Command) {
         }),
       })
     );
-    Interface.sendMessage('Windy!');
+    Interface.handleMessage('Windy!');
   } catch {
     c.error(`Error occurred while executing file ${command.args[0]}.luac`,false);
   }
