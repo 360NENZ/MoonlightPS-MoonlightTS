@@ -25,7 +25,7 @@ cd MoonlightTS
 3.Put Resources in the following folder: 
  
 ```js
-src/data/resource/
+src/data/resources/
 ```
 
 4.Run the following

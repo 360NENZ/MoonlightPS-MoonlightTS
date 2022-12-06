@@ -13,6 +13,7 @@ import Account from '../../../db/Account'
 import { GameConstants } from '../../../game/Constants';
 import { ExcelManager } from '../../../game/managers/ExcelManager';
 
+
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as GetPlayerSocialDetailReq;
   const acc = await Account.fromUID(session.uid);
@@ -36,7 +37,7 @@ export default async function handle(session: Session, packet: DataPacket) {
       finishAchievementNum: 600,
       signature: '<color=#2ba1f0>MoonlightTS on TOP!</color>',
       profilePicture: ProfilePicture.fromPartial({
-        avatarId: 10000070,
+        avatarId: 10000073,
       }),
       worldLevel: 8,
       birthday: Birthday.fromPartial({

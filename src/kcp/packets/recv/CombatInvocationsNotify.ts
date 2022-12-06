@@ -6,13 +6,13 @@ import { Entity, EntityCategory } from '../../../game/entity/entity';
 import { Avatar } from '../../../game/entity/avatar';
 import { FightProperties } from '../../../game/managers/constants/FightProperties';
 
+
 export default async function handle(session: Session, packet: DataPacket) {
     const body = ProtoFactory.getBody(packet) as CombatInvocationsNotify;
 
     for (let invoke of body.invokeList) {
         switch (invoke.argumentType) {
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_EVT_BEING_HIT:
-
                 const BeingHitData = EvtBeingHitInfo.decode(Buffer.from(invoke.combatData));
 
                 session.send(EvtBeingHitNotify,EvtBeingHitNotify.fromPartial({
