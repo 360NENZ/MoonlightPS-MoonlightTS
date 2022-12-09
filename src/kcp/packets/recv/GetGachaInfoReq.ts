@@ -27,36 +27,36 @@ export default async function handle(session: Session, packet: DataPacket) {
 
   session.send(GetGachaInfoRsp,GetGachaInfoRsp.fromPartial({
     retcode: 0,
-    Unk3250PHDNNIBIDKJ: 12345,
-    // Unk3250HCKNBNNEFBB: 12345, // UNKONE IGNORE
+    gachaRandom: 12345,
+    dailyGachaTimes: 12345, // UNKONE IGNORE
     gachaInfoList: [
         GachaInfo.fromPartial({
             gachaType: 301,
             scheduleId: 903,
             beginTime: 0,
             endTime: 1924992000,
-            gachaSortId: 9999,
+            Unk3300BLLMPAJNCPI: 9999,
             gachaUpInfoList:upInfo,
             isNewWish: false,
-            Unk3250KEIJFMKAKDH: 10,
-            Unk3250GLPMIEMBGGL: 221,
-            Unk3250DBFMKAMNPCL: 223, //wish item id for sure
-            Unk3250HLANONBCBLM: 221,
-            Unk3250JLBFLPEMAPP: 223,
-            Unk3250JLELMHELIDC: 223,
-            Unk3250BLLMPAJNCPI: 223,
-            Unk3250MEDMCPFCIOO: 223,
-            Unk3250NMOKGFGDFFC: 223,
-            Unk3250PLFMMOFNGAG: 222,
-            Unk3250ODFKNFOMAGE: "https://api.tamilpp25.me//", //history URL OS
-            Unk3250GKDEEFNFCAC: "https://api.tamilpp25.me//", //detail URL OS
-            Unk3250OFOHDLDFCLF: "GachaShowPanel_A100", //  //gachashowpanel
-            Unk3250BCJONGECBOH: "UI_Tab_GachaShowPanel_A100", //tab showpanel
-            Unk3250JOGAHFBKHNJ: "UI_GACHA_SHOW_PANEL_A100_TITLE", // TITLE PANEL
-            Unk3250FOGPKBALHPI: "https://api.tamilpp25.me//", //UNK URL FIELD??
-            Unk3250HLPKLMGIBIB: "https://api.tamilpp25.me//", //UNK URL FIELD??
-            Unk3250LBLEBDLJDLL: rateUp5star,
-            Unk3250COABNBJCKEO: rateUp4star,
+            Unk3300DBFMKAMNPCL: 223,
+            Unk3300DDBOLMGHEKN: 10,
+            Unk3300GLPMIEMBGGL: 223, //wish item id for sure
+            Unk3300HLANONBCBLM: 223,
+            Unk3300JLBFLPEMAPP: 223,
+            Unk3300JLELMHELIDC: 223,
+            Unk3300KEIJFMKAKDH: 223,
+            Unk3300MEDMCPFCIOO: 223, // gacha values GachaShowPanel_A100 UI_Tab_GachaShowPanel_A100 UI_GACHA_SHOW_PANEL_A100_TITLE
+            Unk3300NMOKGFGDFFC: 223,
+            Unk3300PLFMMOFNGAG: 222,
+            Unk3300FOGPKBALHPI: "unk2", // Title Panel
+            Unk3300HLPKLMGIBIB: "unk", // Title?
+            Unk3300BCJONGECBOH: "UI_Tab_GachaShowPanel_A103", // Tab show panel
+            Unk3300OFOHDLDFCLF: "GachaShowPanel_A103", //tab showpanel
+            Unk3300JOGAHFBKHNJ: "UI_GACHA_SHOW_PANEL_A0103_TITLE", //Title
+            Unk3300ODFKNFOMAGE: "https://oshistory.tamilpp25.me//",
+            Unk3300GKDEEFNFCAC: "https://osprob.tamilpp25.me//",  
+            Unk3300LBLEBDLJDLL: rateUp5star,
+            Unk3300COABNBJCKEO: rateUp4star,
           })
     ]
   }))
