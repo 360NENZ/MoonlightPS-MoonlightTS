@@ -12,7 +12,7 @@ import {
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as MarkMapReq;
 
-  if (body.op === MarkMapReq_Operation.ADD) {
+  if (body.op === MarkMapReq_Operation.OPERATION_ADD) {
     if (
       body.mark &&
       body.mark.pointType === MapMarkPointType.MAP_MARK_POINT_TYPE_FISH_POOL

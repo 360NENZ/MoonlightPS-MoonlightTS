@@ -16,7 +16,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     GetScenePointRsp,
     GetScenePointRsp.fromPartial({
       unlockedPointList: scenePoints,
-      Unk3250FKANNCGJEFJ: [1, 2, 3, 4, 5, 6, 7, 8],
+      unlockAreaList: [1, 2, 3, 4, 5, 6, 7, 8],
       sceneId: body.sceneId,
     })
   );

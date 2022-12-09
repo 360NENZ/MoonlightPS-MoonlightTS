@@ -63,9 +63,9 @@ export class Avatar extends Entity {
       entityId: this.id,
       weaponGuid: 2785642601942876162,
       weaponEntityId: 100664575,
-      Unk3250GENGJLPJCCN: isPlayerCurAvatar,
-      Unk3250ILECHHKDIEM: isPlayerCurAvatar,
-      Unk3250AGAOINKGMMM: this.getSceneEntityInfo(),
+      Unk3300GENGJLPJCCN: isPlayerCurAvatar,
+      Unk3300ILECHHKDIEM: isPlayerCurAvatar,
+      sceneEntityInfo: this.getSceneEntityInfo(),
       abilityControlBlock: AbilityControlBlock.fromPartial({
         abilityEmbryoList: this.embryos,
       }),

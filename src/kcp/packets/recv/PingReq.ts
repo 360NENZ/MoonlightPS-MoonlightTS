@@ -7,6 +7,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     const body = ProtoFactory.getBody(packet) as PingReq;
 
     session.send(PingRsp, PingRsp.fromPartial({
-        Unk3250BJLHCIEPPGP: body.Unk3250BJLHCIEPPGP
+        clientTime: body.clientTime
     }));
 }

@@ -192,7 +192,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     PlayerGameTimeNotify,
     PlayerGameTimeNotify.fromPartial({
       uid: account?.uid,
-      Unk3250ENBHCFJJEHH: 8 * 60,
+      gameTime: 8 * 60,
     })
   );
 

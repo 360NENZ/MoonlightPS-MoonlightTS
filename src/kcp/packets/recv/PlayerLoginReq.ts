@@ -75,10 +75,10 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(StoreWeightLimitNotify, {
     storeType: StoreType.STORE_TYPE_PACK,
     weightLimit: 30000,
-    Unk3250NIKMCBLHFNJ: 2000,
-    Unk3250ICDKCEOJKKG: 2000,
-    Unk3250JGPODDEKAPB: 1500,
-    Unk3250OONMFCGDMMF: 2000,
+    reliquaryCountLimit: 2000,
+    Unk3300JGPODDEKAPB: 2000,
+    Unk3300OONMFCGDMMF: 1500,
+    Unk3300NIKMCBLHFNJ: 2000,
   });
 
   try {
@@ -131,13 +131,13 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     AvatarDataNotify,
     AvatarDataNotify.fromPartial({
-      Unk3250HHKJBGKHIEJ: [
+      ownedCostumeList: [
         201601, 204101, 204501, 202101, 204201, 201401, 200302, 203101, 202701,
         200301,
       ],
       chooseAvatarGuid: session.getAvatarManager().curAvatarGuid,
       avatarTeamMap: session.getAvatarManager().getTeamMap(),
-      Unk3250MDNLGGMGHAF: [
+      ownedFlycloakList: [
         140002, 140003, 140001, 140006, 140007, 140004, 140005, 140010, 140008,
         140009,
       ],
@@ -165,7 +165,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     PlayerLoginRsp,
     PlayerLoginRsp.fromPartial({
       gameBiz: 'hk4e_global',
-      Unk3250IADLIIMGDMC: true,
+      Unk3300CANONIPHMDI: true,
       registerCps: 'mihoyo',
     })
   );
