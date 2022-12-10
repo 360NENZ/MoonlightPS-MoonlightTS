@@ -107,7 +107,10 @@ dist
 # VS Code
 .vscode/
 
-# CrepeSR
+# MoonlightTS
 config.json
-src/data/*
-banners.json
+src/data/proto/*.proto
+src/data/resources
+src/data/windy
+packet
+*.log

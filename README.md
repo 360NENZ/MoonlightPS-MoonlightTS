@@ -4,15 +4,15 @@
 ## Technologies used
 
 - [Express](https://expressjs.com/) - Http(s) Server
-- [protobufjs](https://www.npmjs.com/package/protobufjs) - Used for serializing/deserializing data sent from the Client to the Server and vice versa.
-- [node-kcp](https://github.com/memetrollsXD/node-kcp) - A Fast and Reliable ARQ Protocol
+- [protobuf-ts](https://www.npmjs.com/package/protobufjs) - Used for serializing/deserializing data sent from the Client to the Server and vice versa.
+- [kcp-ts](https://github.com/timing1337/kcp-ts) - A Fast and Reliable ARQ Protocol (Supports 0ms ping)
 
 ## Usage
 
 1.Clone the Github Repository
 
 ```powershell
-git clone https://github.com/tamilpp25/MoonlightTS.git
+git clone https://github.com/MoonlightPS/MoonlightTS.git
 ```
 
 2.Extract and open the repository in the Terminal
@@ -22,7 +22,13 @@ git clone https://github.com/tamilpp25/MoonlightTS.git
 cd MoonlightTS
 ```
 
-3.Run the following
+3.Put Resources in the following folder: 
+ 
+```js
+src/data/resources/
+```
+
+4.Run the following
 
 ```powershell
 npm install
