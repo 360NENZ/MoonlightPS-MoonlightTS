@@ -165,7 +165,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     PlayerLoginRsp,
     PlayerLoginRsp.fromPartial({
       gameBiz: 'hk4e_global',
-      Unk3300CANONIPHMDI: true,
+      isScOpen: true,
       registerCps: 'mihoyo',
     })
   );

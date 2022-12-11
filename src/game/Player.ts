@@ -71,7 +71,7 @@ export class Player {
         })
 
         if(enterReason === 1){
-            teleport.Unk3300OKMNOFOHKOB = true;
+            teleport.Unk3300LFFBNEBMAAG = true;
         }else{
             this.position = position
             teleport.Unk3300LLHABHMLNAH = this.session.getWorld().getSceneId()
