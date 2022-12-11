@@ -46,14 +46,14 @@ export default async function handle(session: Session, packet: DataPacket) {
     DoGachaRsp.fromPartial({
       retcode: 0,
       gachaScheduleId: body.gachaScheduleId,
-      Unk3300JLELMHELIDC: 2147483647,
+      leftGachaTimes: 2147483647,
       gachaTimes: body.gachaTimes,
       gachaType: body.gachaType,
       dailyGachaTimes: body.gachaRandom,
-      Unk3300BLLMPAJNCPI: 1, //costitemnum
-      Unk3300GLPMIEMBGGL: 223, //costitemid
-      Unk3300DBFMKAMNPCL: 10, //tencostitemnum
-      Unk3300JLBFLPEMAPP: 223, //tencostitemid
+      costItemNum: 1,
+      costItemId: 223,
+      tenCostItemNum: 10,
+      tenCostItemId: 223,
       gachaItemList: Random5star,
     })
   );
