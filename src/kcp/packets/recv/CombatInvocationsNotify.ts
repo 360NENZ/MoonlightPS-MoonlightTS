@@ -15,10 +15,6 @@ export default async function handle(session: Session, packet: DataPacket) {
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_EVT_BEING_HIT:
                 const BeingHitData = EvtBeingHitInfo.decode(Buffer.from(invoke.combatData));
 
-                session.send(EvtBeingHitNotify,EvtBeingHitNotify.fromPartial({
-                    forwardType: ForwardType.FORWARD_TYPE_LOCAL,
-                    beingHitInfo: BeingHitData
-                }))
 
 				break;
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_ENTITY_MOVE:
@@ -78,4 +74,6 @@ export default async function handle(session: Session, packet: DataPacket) {
                 break;
         }
     }
+
+    session.send(CombatInvocationsNotify,body)
 }
