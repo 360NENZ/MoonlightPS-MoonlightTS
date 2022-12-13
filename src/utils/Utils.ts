@@ -103,7 +103,7 @@ export class WindyUtils {
     }
     
     public static generateWindyUid(name: string) {
-        name += " @ MoonlightTS"
+        name += " | MoonlightTS"
         let output = "";
         let a, r, g, b, rinc, ginc, binc, ccol;
         const start = '#2B8ACB' 
