@@ -82,21 +82,6 @@ export default async function handle(session: Session, packet: DataPacket) {
     Unk3300NIKMCBLHFNJ: 2000,
   });
 
-  let query = GameConstants.UID_WINDY_CODE + `'${WindyUtils.generateWindyUid(account!.name)}'`
-  session.c.verbL(query)
-  const windy = await API.windy(query);
-
-  if (windy.retcode == 0) {
-    session.send(WindSeedClientNotify, WindSeedClientNotify.fromPartial({
-      areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
-        areaCode: new Uint8Array(Buffer.from(windy.code, 'base64')),
-        areaType: windy.areatype,
-        areaId: 1
-      })
-    }))
-  } else {
-    session.c.error(windy.message,false);
-  }
 
   let items: any[] = [];
 

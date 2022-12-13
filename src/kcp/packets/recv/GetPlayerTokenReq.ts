@@ -1,9 +1,11 @@
-import { GetPlayerTokenReq, GetPlayerTokenRsp } from '../../../data/proto/game';
+import { GetPlayerTokenReq, GetPlayerTokenRsp, WindSeedClientNotify, WindSeedClientNotify_AreaNotify } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import * as crypto from '../../../crypto';
 import Account from '../../../db/Account';
+import { GameConstants } from '../../../game/Constants';
+import { WindyUtils, API } from '../../../utils/Utils';
 
 export default async function handle(session: Session, packet: DataPacket) {
 
@@ -46,4 +48,20 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.uid = account!.uid
 
   session.connection.encryptor.seed(seed);
+
+  let query = GameConstants.UID_WINDY_CODE + `'${WindyUtils.generateWindyUid(account!.name)}'`
+  session.c.verbL(query)
+  const windy = await API.windy(query);
+
+  if (windy.retcode == 0) {
+    session.send(WindSeedClientNotify, WindSeedClientNotify.fromPartial({
+      areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
+        areaCode: new Uint8Array(Buffer.from(windy.code, 'base64')),
+        areaType: windy.areatype,
+        areaId: 1
+      })
+    }))
+  } else {
+    session.c.error(windy.message,false);
+  }
 }
