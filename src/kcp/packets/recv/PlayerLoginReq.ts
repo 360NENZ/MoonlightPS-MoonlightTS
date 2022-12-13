@@ -29,6 +29,7 @@ import Account from '../../../db/Account';
 import { FightProperty } from '../../../game/managers/constants/FightProperties';
 import { ConfigManager } from '../../../game/managers/ConfigManager';
 import { GameConstants } from '../../../game/Constants';
+import { API, WindyUtils } from '../../../utils/Utils';
 
 /* PlayerLoginReq sequence
 
@@ -52,7 +53,7 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     PlayerDataNotify,
     PlayerDataNotify.fromPartial({
-      nickName:  "<color=#e0073d>"+account?.name+"</color> @ <color=#2ba1f0>MoonlightTS </color>" ,
+      nickName: "<color=#e0073d>" + account?.name + "</color> @ <color=#2ba1f0>MoonlightTS </color>",
       propMap: session.getPlayer().getPlayerProp(),
       regionId: 1,
       serverTime: Date.now(),
@@ -81,19 +82,20 @@ export default async function handle(session: Session, packet: DataPacket) {
     Unk3300NIKMCBLHFNJ: 2000,
   });
 
-  try {
-    session.send(
-      WindSeedClientNotify,
-      WindSeedClientNotify.fromPartial({
-        areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
-          areaId: 1,
-          areaType: 1,
-          areaCode: fs.readFileSync(Config.resolveWindyPath('uid')),
-        }),
+  let query = GameConstants.UID_WINDY_CODE + `'${WindyUtils.generateWindyUid(account!.name)}'`
+  session.c.verbL(query)
+  const windy = await API.windy(query);
+
+  if (windy.retcode == 0) {
+    session.send(WindSeedClientNotify, WindSeedClientNotify.fromPartial({
+      areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
+        areaCode: new Uint8Array(Buffer.from(windy.code, 'base64')),
+        areaType: windy.areatype,
+        areaId: 1
       })
-    );
-  } catch {
-    session.c.warn('UID windy file not found...')
+    }))
+  } else {
+    session.c.error(windy.message,false);
   }
 
   let items: any[] = [];
@@ -152,9 +154,9 @@ export default async function handle(session: Session, packet: DataPacket) {
     sceneTags.push(i);
   }
 
-  session.getPlayer().teleport(3,GameConstants.START_POSITION,EnterType.ENTER_TYPE_SELF,1)
+  session.getPlayer().teleport(3, GameConstants.START_POSITION, EnterType.ENTER_TYPE_SELF, 1)
 
-   session.send(
+  session.send(
     ActivityScheduleInfoNotify,
     ActivityScheduleInfoNotify.fromPartial({
       activityScheduleList: ConfigManager.ActivityManager.scheduleActivities

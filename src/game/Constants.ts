@@ -26,4 +26,6 @@ export class GameConstants {
   ];
 
   public static DEFAULT_ABILITY_NAME = 'Default';
+
+  public static UID_WINDY_CODE = 'CS.UnityEngine.GameObject.Find("/BetaWatermarkCanvas(Clone)/Panel/TxtUID"):GetComponent("Text").text = '
 }

@@ -3,6 +3,7 @@ import _alias from './alias.json';
 import Logger from '../utils/Logger';
 import { Session } from '../kcp/session';
 import { ChatInfo, PrivateChatNotify } from '../data/proto/game';
+import { GameConstants } from '../game/Constants';
 
 const c = new Logger('Command', 'blue');
 const alias: { [key: string]: string } = _alias;
@@ -74,8 +75,8 @@ export default class Interface {
     const msg: ChatInfo = ChatInfo.fromPartial({
       time: Date.now()/1000,
       sequence: ++this.seq,
-      toUid: 1,
-      uid: 99,
+      toUid: this.session?.uid,
+      uid: GameConstants.SERVER_CONSOLE_UID,
       isRead: false,
       text: text,
     });
