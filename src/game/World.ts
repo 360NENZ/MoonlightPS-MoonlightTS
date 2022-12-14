@@ -5,7 +5,7 @@ import {
   VisionType,
 } from '../data/proto/game';
 import { Session } from '../kcp/session';
-import { Entity } from './entity/entity';
+import { Entity, EntityCategory } from './entity/entity';
 import { DataProperties } from './managers/constants/DataProperties';
 
 export class MaterialData {
@@ -27,6 +27,13 @@ export class World {
   public mpLevelentityId: number;
 
   public sceneId: number = 3;
+
+  public worldEntities: {[key in EntityCategory]: number[]} = {
+    [EntityCategory.None]: [],
+    [EntityCategory.Avatar]: [],
+    [EntityCategory.Gadget]: [],
+    [EntityCategory.Monster]: []
+  }
 
   constructor(session: Session) {
     this.session = session;
@@ -66,6 +73,7 @@ export class World {
       })
     );
     this.entities[entity.getId()] === undefined;
+    this.worldEntities[entity.category]
   }
 
   public addEntity(entity: Entity, visionType = VisionType.VISION_TYPE_BORN) {
@@ -77,6 +85,7 @@ export class World {
       })
     );
     this.entities[entity.getId()] = entity;
+    this.worldEntities[entity.category].push(entity.getId())
   }
 
   public getEntityById(id: number): Entity {

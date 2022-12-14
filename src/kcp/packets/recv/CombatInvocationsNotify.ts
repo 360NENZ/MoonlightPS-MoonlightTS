@@ -52,9 +52,9 @@ export default async function handle(session: Session, packet: DataPacket) {
                     rotation = Vector.fromPartial({x:0,y:0,z:0})
                 }
 
-                entity.rotation = rotation!;
+                entity.rotation = rotation || Vector.fromPartial({});
                 
-                let speed = moveInfo.motionInfo?.speed
+                let speed = moveInfo.motionInfo?.speed || Vector.fromPartial({})
 
                 if(speed === null){
                     speed = Vector.fromPartial({x:0,y:0,z:0})
