@@ -53,7 +53,7 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(
     PlayerDataNotify,
     PlayerDataNotify.fromPartial({
-      nickName: "<color=#e0073d>" + account?.name + "</color> @ <color=#2ba1f0>MoonlightTS </color>",
+      nickName: "<color=#6b789b>" + account?.name + "</color> @ <color=#6B789B>M</color><color=#697A9C>o</color><color=#687C9D>o</color><color=#677E9E>n</color><color=#66809F>l</color><color=#6582A0>i</color><color=#6485A1>g</color><color=#6387A2>h</color><color=#6289A3>t</color><color=#618BA4>T</color><color=#608DA5>S</color>", //hardcoded colors
       propMap: session.getPlayer().getPlayerProp(),
       regionId: 1,
       serverTime: Date.now(),
