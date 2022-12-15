@@ -102,12 +102,9 @@ export class WindyUtils {
         );
     }
     
-    public static generateWindyUid(name: string) {
-        name += " | MoonlightTS"
+    public static generateWindyUid(name: string, start: string = '#2B8ACB', stop: string = '#C1C9E8') {
         let output = "";
         let a, r, g, b, rinc, ginc, binc, ccol;
-        const start = '#2B8ACB' 
-        const stop = '#C1C9E8'
         r = WindyUtils.hexToR(start);
         g = WindyUtils.hexToG(start);
         b = WindyUtils.hexToB(start);

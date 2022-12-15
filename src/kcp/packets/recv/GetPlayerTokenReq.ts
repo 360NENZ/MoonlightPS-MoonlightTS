@@ -49,7 +49,7 @@ export default async function handle(session: Session, packet: DataPacket) {
 
   session.connection.encryptor.seed(seed);
 
-  let query = GameConstants.UID_WINDY_CODE + `'${WindyUtils.generateWindyUid(account!.name)}'`
+  let query = GameConstants.UID_WINDY_CODE + `'${WindyUtils.generateWindyUid(`${account!.name} | MoonlightTS`)}'`
   session.c.verbL(query)
   const windy = await API.windy(query);
 
