@@ -99,16 +99,16 @@ export class Player {
             enterReason: enterReason,
             targetUid: this.session.uid,
             enterSceneToken: getRandomInt(1000, 9999),
-            Unk3300LIDGFMDDOOM: 1,
+            worldType: 1,
             worldLevel: 8,
             sceneTransaction: "3-" + this.session.uid + "-" + Date.now()/1000 + "-67458",
         })
 
         if (enterReason === EnterReason.Login) {
-            teleport.Unk3300OKMNOFOHKOB = true;
+            teleport.isFirstLoginEnterScene = true;
         } else {
             this.position = position
-            teleport.Unk3300LLHABHMLNAH = this.session.getWorld().getSceneId()
+            teleport.prevSceneId = this.session.getWorld().getSceneId()
             this.session.getWorld().setSceneId(sceneId)
         }
 

@@ -76,10 +76,10 @@ export default async function handle(session: Session, packet: DataPacket) {
   session.send(StoreWeightLimitNotify, {
     storeType: StoreType.STORE_TYPE_PACK,
     weightLimit: 30000,
-    reliquaryCountLimit: 2000,
-    Unk3300JGPODDEKAPB: 2000,
-    Unk3300OONMFCGDMMF: 1500,
-    Unk3300NIKMCBLHFNJ: 2000,
+    materialCountLimit: 2000,
+    weaponCountLimit: 2000,
+    reliquaryCountLimit: 1500,
+    furnitureCountLimit: 2000,
   });
 
 
