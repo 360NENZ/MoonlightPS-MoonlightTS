@@ -35,7 +35,7 @@ export default async function handle(session: Session, packet: DataPacket) {
       isShowAvatar: true,
       nameCardId: GameConstants.DEFAULT_NAMECARD,
       finishAchievementNum: 600,
-      signature: '<color=#2ba1f0>MoonlightTS on TOP!</color>',
+      signature: '<color=#2ba1f0>MoonlightTS 3.3.5x</color>',
       profilePicture: ProfilePicture.fromPartial({
         avatarId: 10000073,
       }),
