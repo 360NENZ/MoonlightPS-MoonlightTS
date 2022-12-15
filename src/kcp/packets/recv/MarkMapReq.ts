@@ -19,7 +19,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     ) {
       const mark = body.mark;
 
-      session.getPlayer().teleport(mark.sceneId,Vector.fromPartial({x: mark.pos?.x,y: 300, z: mark.pos?.z}),EnterType.ENTER_TYPE_GOTO,3)
+      session.getPlayer().teleport(mark.sceneId,Vector.fromPartial({x: mark.pos?.x,y: 350, z: mark.pos?.z}),EnterType.ENTER_TYPE_JUMP)
     }
   }
 }
