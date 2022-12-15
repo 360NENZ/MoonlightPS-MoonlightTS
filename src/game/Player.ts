@@ -51,21 +51,21 @@ export class Player {
     }
 
     private initNewProp() {
-        this.playerProp[DataProperties.PROP_PLAYER_RESIN] = 2000
+        this.playerProp[DataProperties.PROP_PLAYER_RESIN] = 160
         this.playerProp[DataProperties.PROP_IS_SPRING_AUTO_USE] = 1
         this.playerProp[DataProperties.PROP_MAX_SPRING_VOLUME] = 8000000
         this.playerProp[DataProperties.PROP_CUR_SPRING_VOLUME] = 8000000
         this.playerProp[DataProperties.PROP_SPRING_AUTO_USE_PERCENT] = 0.5
-        this.playerProp[DataProperties.PROP_MAX_STAMINA] = 24000
+        this.playerProp[DataProperties.PROP_MAX_STAMINA] = 24000 // Inf Stamina
         this.playerProp[DataProperties.PROP_CUR_PERSIST_STAMINA] = 24000
         this.playerProp[DataProperties.PROP_IS_FLYABLE] = 1
         this.playerProp[DataProperties.PROP_IS_TRANSFERABLE] = 1
         this.playerProp[DataProperties.PROP_IS_MP_MODE_AVAILABLE] = 1
         this.playerProp[DataProperties.PROP_PLAYER_MP_SETTING_TYPE] = 2
-        this.playerProp[DataProperties.PROP_PLAYER_WORLD_LEVEL] = 100
-        this.playerProp[DataProperties.PROP_PLAYER_LEVEL] = 100
+        this.playerProp[DataProperties.PROP_PLAYER_WORLD_LEVEL] = 8
+        this.playerProp[DataProperties.PROP_PLAYER_LEVEL] = 60
         this.playerProp[DataProperties.PROP_PLAYER_EXP] = 999999
-        this.playerProp[DataProperties.PROP_PLAYER_SCOIN] = 999999999
+        this.playerProp[DataProperties.PROP_PLAYER_SCOIN] = 99999999
     }
 
     getPlayerProp() {
