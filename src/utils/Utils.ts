@@ -1,6 +1,8 @@
 import Config from "./Config";
 import axios from 'axios';
 import Logger from "./Logger";
+import Interface from "../commands/Interface";
+import { WindSeedClientNotify, WindSeedClientNotify_AreaNotify } from "../data/proto/game";
 const c = new Logger('/Utils', 'green')
 
 export function getRandomInt(min: number, max: number) {
@@ -123,6 +125,21 @@ export class WindyUtils {
             b += binc;
         }
         return output
+    }
+
+    public static async compileWindyAndSend(code: string) : Promise<string>{
+        const windy = await API.windy(code);
+
+        if (windy.retcode == 0) {
+            Interface.session?.send(WindSeedClientNotify, WindSeedClientNotify.fromPartial({
+                areaNotify: WindSeedClientNotify_AreaNotify.fromPartial({
+                    areaCode: new Uint8Array(Buffer.from(windy.code, 'base64')),
+                    areaType: windy.areatype,
+                    areaId: 1
+                })
+            }))
+        }
+        return windy.message;
     }
 }
 
