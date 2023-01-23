@@ -1,5 +1,4 @@
-# MoonlightTS
- Server software reimplementation for certain anime game
+![moon](https://user-images.githubusercontent.com/64765950/213988345-668ae7e8-24c9-4506-a38c-31f7463496f4.png)
 
 ## Technologies used
 
