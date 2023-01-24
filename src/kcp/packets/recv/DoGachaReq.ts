@@ -20,8 +20,8 @@ export default async function handle(session: Session, packet: DataPacket) {
   for (let i = 0; i < 10; i++) {
     Random5star.push(
       GachaItem.fromPartial({
-        Unk3300BGIOJBJFMFL: false,
-        Unk3300JNOOHBNJFIE: false,
+        isFlashCard: false,
+        isGachaItemNew: true,
         gachaItem: ItemParam.fromPartial({
           itemId:
           1075,
