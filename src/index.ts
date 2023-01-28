@@ -13,13 +13,11 @@ import ProtoFactory from './utils/ProtoFactory';
 import { FightProperty } from './game/managers/constants/FightProperties';
 import { ConfigManager } from './game/managers/ConfigManager';
 import { EntityProperty } from './game/managers/constants/EntityProperties';
-import {API, checkApiPresence} from './utils/Utils';
 
 const c = new Logger('MoonlightTS');
 c.log('Starting MoonlightTS...');
 
 ConfigManager.init();
-checkApiPresence();
 
 HttpServer.getInstance().start();
 ProtoFactory.init();
@@ -29,6 +27,5 @@ Interface.start();
 FightProperty.init();
 EntityProperty.init();
 ExcelManager.init();
-API.init();
 
 new SystemExecutor().register(new KcpServer()).start(100);

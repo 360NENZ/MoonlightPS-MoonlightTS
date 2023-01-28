@@ -14,8 +14,7 @@ const DEFAULT_CONFIG = {
     // HTTP
     HTTP: {
         HTTP_HOST: "0.0.0.0",
-        HTTP_PORT: 443,
-        API_KEY: ""
+        HTTP_PORT: 443
     },
 
     // Dispatch
@@ -85,8 +84,7 @@ export default class Config {
     public static MONGO_URI: string = Config.config.MONGO_URI;
     public static HTTP: {
         HTTP_HOST: string,
-        HTTP_PORT: number,
-        API_KEY: string
+        HTTP_PORT: number
     } = Config.config.HTTP;
     public static DISPATCH: {
         DISPATCH_NAME: string;
