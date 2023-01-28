@@ -1,5 +1,7 @@
 ![moon](https://user-images.githubusercontent.com/64765950/213988345-668ae7e8-24c9-4506-a38c-31f7463496f4.png)
 
+[Discord](https://discord.gg/JECezpwTHg)
+
 ## Technologies used
 
 - [Express](https://expressjs.com/) - Http(s) Server
