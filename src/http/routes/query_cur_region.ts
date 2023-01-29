@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Config from '../../utils/Config';
-import { QueryCurrRegionHttpRsp, RegionInfo, StopServerInfo } from '../../data/proto/game';
+import { QueryCurrRegionHttpRsp, RegionInfo, StopServerInfo } from '../../data/proto/web';
 import { Ec2bKey, encryptAndSign } from '../../crypto';
 import Logger from '../../utils/Logger';
 
