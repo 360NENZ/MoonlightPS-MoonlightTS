@@ -107,6 +107,9 @@ dist
 # VS Code
 .vscode/
 
+# MacOS
+.DS_Store
+
 # MoonlightTS
 config.json
 src/data/proto/*.proto
