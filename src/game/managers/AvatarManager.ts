@@ -91,7 +91,7 @@ export class AvatarManager {
     for (let i = 1; i < 5; i++) {
       teamMap[i] = AvatarTeam.fromPartial({
         avatarGuidList: this.getTeam(i),
-        teamName: 'MoonlightTS!',
+        teamName: 'Team Standing By',
       });
     }
     return teamMap;

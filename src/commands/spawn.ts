@@ -1,9 +1,6 @@
-import { SceneEntityAppearNotify, SceneEntityInfo, SceneMonsterInfo } from '../data/proto/game';
 import { Monster } from '../game/entity/monster';
-import { FightProperty } from '../game/managers/constants/FightProperties';
 import { ExcelManager } from '../game/managers/ExcelManager';
 import { MonsterData } from '../game/managers/Types/MonsterData';
-import { Session } from '../kcp/session';
 import Logger from '../utils/Logger';
 import Interface, { Command } from './Interface';
 const c = new Logger('/spawn', 'blue');

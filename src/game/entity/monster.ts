@@ -21,7 +21,7 @@ export class Monster extends Entity {
     public monsterData: MonsterData;
     public fightProps: { [key: number]: number } = []
     constructor(monsterData: MonsterData, world: World, motion: Vector, rotation = undefined, speed = undefined) {
-        super(world, motion, ProtEntityType.PROT_ENTITY_TYPE_GADGET, EntityCategory.Gadget, rotation, speed);
+        super(world, motion, ProtEntityType.PROT_ENTITY_TYPE_GADGET, EntityCategory.Monster, rotation, speed);
         (this.id = world.getNextEntityId(ProtEntityType.PROT_ENTITY_TYPE_MONSTER)),
             (this.monsterData = monsterData),
             (this.guid = world.getNextGuid());

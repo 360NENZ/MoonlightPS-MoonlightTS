@@ -12,14 +12,14 @@ import {
 export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as MarkMapReq;
 
-  if (body.op === MarkMapReq_Operation.ADD) {
+  if (body.op === MarkMapReq_Operation.OPERATION_ADD) {
     if (
       body.mark &&
       body.mark.pointType === MapMarkPointType.MAP_MARK_POINT_TYPE_FISH_POOL
     ) {
       const mark = body.mark;
 
-      session.getPlayer().teleport(mark.sceneId,Vector.fromPartial({x: mark.pos?.x,y: 300, z: mark.pos?.z}),EnterType.ENTER_TYPE_GOTO,3)
+      session.getPlayer().teleport(mark.sceneId,Vector.fromPartial({x: mark.pos?.x,y: 350, z: mark.pos?.z}),EnterType.ENTER_TYPE_JUMP)
     }
   }
 }

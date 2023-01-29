@@ -11,7 +11,7 @@ import { AvatarManager } from '../game/managers/AvatarManager';
 const c = new Logger('Session', 'yellow');
 
 type UnWrapMessageType<T> = T extends MessageType<infer U> ? U : T;
-const loopPackets: string[] = ['PingReq', 'PingRsp','UnlockNameCardNotify','EvtDoSkillSuccNotify','UnionCmdNotify'];
+const loopPackets: string[] = ['PingReq', 'PingRsp','UnlockNameCardNotify','EvtDoSkillSuccNotify','UnionCmdNotify','CombatInvocationsNotify'];
 
 export class Session {
   connection: KcpConnection;

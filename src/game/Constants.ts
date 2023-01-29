@@ -26,4 +26,5 @@ export class GameConstants {
   ];
 
   public static DEFAULT_ABILITY_NAME = 'Default';
+
 }

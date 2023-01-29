@@ -15,10 +15,6 @@ export default async function handle(session: Session, packet: DataPacket) {
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_EVT_BEING_HIT:
                 const BeingHitData = EvtBeingHitInfo.decode(Buffer.from(invoke.combatData));
 
-                session.send(EvtBeingHitNotify,EvtBeingHitNotify.fromPartial({
-                    forwardType: ForwardType.FORWARD_TYPE_LOCAL,
-                    beingHitInfo: BeingHitData
-                }))
 
 				break;
             case CombatTypeArgument.COMBAT_TYPE_ARGUMENT_ENTITY_MOVE:
@@ -56,9 +52,9 @@ export default async function handle(session: Session, packet: DataPacket) {
                     rotation = Vector.fromPartial({x:0,y:0,z:0})
                 }
 
-                entity.rotation = rotation!;
+                entity.rotation = rotation || Vector.fromPartial({});
                 
-                let speed = moveInfo.motionInfo?.speed
+                let speed = moveInfo.motionInfo?.speed || Vector.fromPartial({})
 
                 if(speed === null){
                     speed = Vector.fromPartial({x:0,y:0,z:0})
@@ -78,4 +74,6 @@ export default async function handle(session: Session, packet: DataPacket) {
                 break;
         }
     }
+
+    session.send(CombatInvocationsNotify,body)
 }

@@ -20,14 +20,14 @@ export default async function handle(session: Session, packet: DataPacket) {
   for (let i = 0; i < 10; i++) {
     Random5star.push(
       GachaItem.fromPartial({
-        Unk3250BGIOJBJFMFL: false,
-        Unk3250JNOOHBNJFIE: false,
-        Unk3250MOIMPMILFKM: ItemParam.fromPartial({
+        isFlashCard: false,
+        isGachaItemNew: true,
+        gachaItem: ItemParam.fromPartial({
           itemId:
           1075,
           count: 1,
         }),
-        Unk3250NMAHEOOJOFM: [
+        tokenItemList: [
           ItemParam.fromPartial({
             itemId: 222,
             count: getRandomInt(1, 100),
@@ -46,14 +46,14 @@ export default async function handle(session: Session, packet: DataPacket) {
     DoGachaRsp.fromPartial({
       retcode: 0,
       gachaScheduleId: body.gachaScheduleId,
-      Unk3250HCKNBNNEFBB: 2147483647,
-      Unk3250NNHBPPJPLID: body.Unk3250NNHBPPJPLID,
+      leftGachaTimes: 2147483647,
+      gachaTimes: body.gachaTimes,
       gachaType: body.gachaType,
-      newGachaRandom: body.Unk3250NNHBPPJPLID,
-      Unk3250GLPMIEMBGGL: 1, //costitemnum
-      Unk3250DBFMKAMNPCL: 223, //costitemid
-      Unk3250BLLMPAJNCPI: 10, //tencostitemnum
-      Unk3250PLFMMOFNGAG: 223, //tencostitemid
+      dailyGachaTimes: body.gachaRandom,
+      costItemNum: 1,
+      costItemId: 223,
+      tenCostItemNum: 10,
+      tenCostItemId: 223,
       gachaItemList: Random5star,
     })
   );

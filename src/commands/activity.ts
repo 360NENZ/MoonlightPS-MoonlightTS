@@ -5,7 +5,7 @@ import Interface, { Command } from './Interface';
 const c = new Logger('/exit', 'blue');
 
 export default async function handle(command: Command, executor: boolean) {
-  if (command.args.length > 1) {
+  if (command.args.length < 1) {
     Interface.handleMessage(
       'Usage: /activity (add/reload) [<id>]'
     );

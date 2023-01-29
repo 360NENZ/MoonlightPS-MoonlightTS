@@ -22,7 +22,7 @@ export default async function handle(command: Command, executor: boolean) {
             scene = Number.parseInt(command.args[3])
         }
 
-        player?.teleport(scene, Vector.fromPartial({ x: x, y: y, z: z }), EnterType.ENTER_TYPE_GOTO)
+        player?.teleport(scene, Vector.fromPartial({ x: x, y: y, z: z }), EnterType.ENTER_TYPE_JUMP)
         Interface.handleMessage(`Teleported to ${x},${y},${z} (${scene})`)
     } catch {
         Interface.handleMessage('Usage: /tp x y z [sceneId]')

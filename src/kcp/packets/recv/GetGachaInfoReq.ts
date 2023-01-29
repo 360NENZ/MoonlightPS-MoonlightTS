@@ -27,8 +27,8 @@ export default async function handle(session: Session, packet: DataPacket) {
 
   session.send(GetGachaInfoRsp,GetGachaInfoRsp.fromPartial({
     retcode: 0,
-    Unk3250PHDNNIBIDKJ: 12345,
-    // Unk3250HCKNBNNEFBB: 12345, // UNKONE IGNORE
+    gachaRandom: 12345,
+    dailyGachaTimes: 12345,
     gachaInfoList: [
         GachaInfo.fromPartial({
             gachaType: 301,
@@ -38,25 +38,18 @@ export default async function handle(session: Session, packet: DataPacket) {
             gachaSortId: 9999,
             gachaUpInfoList:upInfo,
             isNewWish: false,
-            Unk3250KEIJFMKAKDH: 10,
-            Unk3250GLPMIEMBGGL: 221,
-            Unk3250DBFMKAMNPCL: 223, //wish item id for sure
-            Unk3250HLANONBCBLM: 221,
-            Unk3250JLBFLPEMAPP: 223,
-            Unk3250JLELMHELIDC: 223,
-            Unk3250BLLMPAJNCPI: 223,
-            Unk3250MEDMCPFCIOO: 223,
-            Unk3250NMOKGFGDFFC: 223,
-            Unk3250PLFMMOFNGAG: 222,
-            Unk3250ODFKNFOMAGE: "https://api.tamilpp25.me//", //history URL OS
-            Unk3250GKDEEFNFCAC: "https://api.tamilpp25.me//", //detail URL OS
-            Unk3250OFOHDLDFCLF: "GachaShowPanel_A100", //  //gachashowpanel
-            Unk3250BCJONGECBOH: "UI_Tab_GachaShowPanel_A100", //tab showpanel
-            Unk3250JOGAHFBKHNJ: "UI_GACHA_SHOW_PANEL_A100_TITLE", // TITLE PANEL
-            Unk3250FOGPKBALHPI: "https://api.tamilpp25.me//", //UNK URL FIELD??
-            Unk3250HLPKLMGIBIB: "https://api.tamilpp25.me//", //UNK URL FIELD??
-            Unk3250LBLEBDLJDLL: rateUp5star,
-            Unk3250COABNBJCKEO: rateUp4star,
+            tenCostItemId: 223,
+            tenCostItemNum: 10,
+            costItemId: 223,
+            costItemNum: 1,
+            leftGachaTimes: 2147483647,
+            gachaProbUrlOversea: "https://prob.tamilpp25.me//", //history URL OS
+            gachaRecordUrlOversea: "https://record.tamilpp25.me//", //detail URL OS
+            gachaPrefabPath: "GachaShowPanel_A100", //  //gachashowpanel
+            gachaPreviewPrefabPath: "UI_Tab_GachaShowPanel_A100", //tab showpanel
+            titleTextmap: "UI_GACHA_SHOW_PANEL_A100_TITLE", // TITLE PANEL
+            displayUp5ItemList: rateUp5star,
+            displayUp4ItemList: rateUp4star,
           })
     ]
   }))

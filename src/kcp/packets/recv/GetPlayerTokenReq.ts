@@ -1,4 +1,4 @@
-import { GetPlayerTokenReq, GetPlayerTokenRsp } from '../../../data/proto/game';
+import { GetPlayerTokenReq, GetPlayerTokenRsp, WindSeedClientNotify, WindSeedClientNotify_AreaNotify } from '../../../data/proto/game';
 import { Session } from '../../session';
 import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
@@ -34,11 +34,11 @@ export default async function handle(session: Session, packet: DataPacket) {
     retcode: 0,
     uid: account?.uid,
     token: account?.token,
-    Unk3250DILMOPPLPEM: body.Unk3250DILMOPPLPEM,
+    accountType: body.accountType,
     accountUid: body.accountUid,
     channelId: body.channelId,
-    Unk3250BBOCPCOJNKF: encryptedSeed,
-    Unk3250HBNIIDFKHGN: seedSignature,
+    serverRandKey: encryptedSeed,
+    sign: seedSignature,
   });
 
   session.send(GetPlayerTokenRsp, dataObj);
