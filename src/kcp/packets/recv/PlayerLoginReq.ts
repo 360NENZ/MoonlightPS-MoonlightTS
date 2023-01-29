@@ -3,19 +3,13 @@ import {
   Item,
   Material,
   OpenStateUpdateNotify,
-  PlayerDataNotify,
-  PlayerEnterSceneNotify,
   PlayerLoginReq,
   PlayerLoginRsp,
-  PlayerPropNotify,
   PlayerStoreNotify,
   EnterType,
   StoreType,
   StoreWeightLimitNotify,
-  WindSeedClientNotify,
-  WindSeedClientNotify_AreaNotify,
   UnlockNameCardNotify,
-  Vector,
   ActivityScheduleInfoNotify,
 } from '../../../data/proto/game';
 import { Session } from '../../session';
@@ -29,7 +23,6 @@ import Account from '../../../db/Account';
 import { FightProperty } from '../../../game/managers/constants/FightProperties';
 import { ConfigManager } from '../../../game/managers/ConfigManager';
 import { GameConstants } from '../../../game/Constants';
-import { API, WindyUtils } from '../../../utils/Utils';
 
 /* PlayerLoginReq sequence
 
@@ -49,16 +42,6 @@ export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as PlayerLoginReq;
 
   const account = await Account.fromToken(body.token);
-
-  session.send(
-    PlayerDataNotify,
-    PlayerDataNotify.fromPartial({
-      nickName: "<color=#6b789b>" + account?.name + "</color> @ " + WindyUtils.generateWindyUid('MoonlightTS','#5d6b90','#9ed9f6'),
-      propMap: session.getPlayer().getPlayerProp(),
-      regionId: 1,
-      serverTime: Date.now(),
-    })
-  );
 
   const openStateMap: { [key: number]: number } = {};
 
