@@ -3,6 +3,7 @@ import {
   Item,
   Material,
   OpenStateUpdateNotify,
+  PlayerDataNotify,
   PlayerLoginReq,
   PlayerLoginRsp,
   PlayerStoreNotify,
@@ -17,10 +18,7 @@ import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import { ExcelManager } from '../../../game/managers/ExcelManager';
 import { MaterialData } from '../../../game/World';
-import Config from '../../../utils/Config';
-import fs from 'fs';
 import Account from '../../../db/Account';
-import { FightProperty } from '../../../game/managers/constants/FightProperties';
 import { ConfigManager } from '../../../game/managers/ConfigManager';
 import { GameConstants } from '../../../game/Constants';
 

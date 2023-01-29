@@ -100,6 +100,8 @@ export class ExcelManager {
           );
         });
         this.embryos[file.split('_')[1].replace('.json', '')] = abilities;
+        // console.log(file.split('_')[1].replace('.json', ''))
+        // console.table(abilities)
       }
     }
 

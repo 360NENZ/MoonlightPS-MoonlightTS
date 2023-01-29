@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Config from "../../utils/Config";
-import { QueryRegionListHttpRsp, RegionSimpleInfo } from '../../data/proto/game';
+import { QueryRegionListHttpRsp, RegionSimpleInfo } from '../../data/proto/web';
 import { Ec2bKey } from "../../crypto";
 
 const ec2b = new Ec2bKey()
