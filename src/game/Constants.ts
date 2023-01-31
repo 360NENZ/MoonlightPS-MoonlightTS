@@ -1,6 +1,8 @@
 import { Vector } from '../data/proto/game';
 
 export class GameConstants {
+  public static SERVER_VERSION = "3.4.0";
+
   public static MAIN_CHARACTER_MALE = 10000005;
   public static MAIN_CHARACTER_FEMALE = 10000007;
 
@@ -11,6 +13,8 @@ export class GameConstants {
   });
 
   public static SERVER_CONSOLE_UID = 99;
+
+  public static DEFAULT_PROFILE_PICTURE = 10000074;
 
   public static DEFAULT_NAMECARD = 210146;
 
