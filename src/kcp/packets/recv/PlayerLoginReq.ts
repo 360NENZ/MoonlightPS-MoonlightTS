@@ -3,6 +3,7 @@ import {
   Item,
   Material,
   OpenStateUpdateNotify,
+  PlayerDataNotify,
   PlayerLoginReq,
   PlayerLoginRsp,
   PlayerStoreNotify,
@@ -17,12 +18,10 @@ import { DataPacket } from '../../packet';
 import ProtoFactory from '../../../utils/ProtoFactory';
 import { ExcelManager } from '../../../game/managers/ExcelManager';
 import { MaterialData } from '../../../game/World';
-import Config from '../../../utils/Config';
-import fs from 'fs';
 import Account from '../../../db/Account';
-import { FightProperty } from '../../../game/managers/constants/FightProperties';
 import { ConfigManager } from '../../../game/managers/ConfigManager';
 import { GameConstants } from '../../../game/Constants';
+import { generateGradientText } from '../../../utils/Utils';
 
 /* PlayerLoginReq sequence
 
@@ -42,6 +41,16 @@ export default async function handle(session: Session, packet: DataPacket) {
   const body = ProtoFactory.getBody(packet) as PlayerLoginReq;
 
   const account = await Account.fromToken(body.token);
+
+  session.send(
+    PlayerDataNotify,
+    PlayerDataNotify.fromPartial({
+      nickName: "<color=#6b789b>" + account?.name + "</color> | " + generateGradientText(`MoonlightTS`,'#5d6b90','#9ed9f6'),
+      propMap: session.getPlayer().getPlayerProp(),
+      regionId: 1,
+      serverTime: Date.now(),
+    })
+  );
 
   const openStateMap: { [key: number]: number } = {};
 
@@ -103,7 +112,7 @@ export default async function handle(session: Session, packet: DataPacket) {
     AvatarDataNotify.fromPartial({
       ownedCostumeList: [
         201601, 204101, 204501, 202101, 204201, 201401, 200302, 203101, 202701,
-        200301,
+        200301, 200201
       ],
       chooseAvatarGuid: session.getAvatarManager().curAvatarGuid,
       avatarTeamMap: session.getAvatarManager().getTeamMap(),
