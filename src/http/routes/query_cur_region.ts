@@ -3,6 +3,7 @@ import Config from '../../utils/Config';
 import { QueryCurrRegionHttpRsp, RegionInfo, StopServerInfo } from '../../data/proto/web';
 import { Ec2bKey, encryptAndSign } from '../../crypto';
 import Logger from '../../utils/Logger';
+import { Retcode } from '../../data/proto/ret';
 
 const c = new Logger('Dispatch', 'blue');
 
@@ -11,7 +12,7 @@ const ec2b = new Ec2bKey();
 export default async function handle(req: Request, res: Response) {
   if (Config.GAMESERVER.MAINTENANCE) {
     const maintenance = QueryCurrRegionHttpRsp.fromPartial({
-      retcode: 11,
+      retcode: Retcode.RET_STOP_SERVER,
       msg: "MoonlightTS",
       regionInfo: RegionInfo.fromPartial({}),
       stopServer: StopServerInfo.fromPartial({
